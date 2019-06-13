@@ -16,18 +16,23 @@ namespace SprocWrapper
                 var procs = GetProcs(sqlConnection, like);
                 foreach (var proc in procs)
                 {
-                    using (var dataReader = new SprocWrapper.Procs.Dbo.sp_procedure_params_rowset(sqlConnection, proc).ExecuteDataReader())
-                    {
-                        while (dataReader.Read())
-                        {
-                            for (int columnIndex = 0; columnIndex < dataReader.FieldCount; columnIndex++)
-                            {
-                                Logger.Log("    {0}={1}",dataReader.GetName(columnIndex), dataReader[columnIndex]);
-                            }
-                        }
-                    }
+                    GetParams(sqlConnection, proc);
                 }
 
+            }
+        }
+
+        private static void GetParams(SqlConnection sqlConnection, string proc)
+        {
+            using (var dataReader = new SprocWrapper.Procs.Dbo.sp_procedure_params_rowset(sqlConnection, proc).ExecuteDataReader())
+            {
+                while (dataReader.Read())
+                {
+                    for (int columnIndex = 0; columnIndex < dataReader.FieldCount; columnIndex++)
+                    {
+                        Logger.Log("    {0}={1}", dataReader.GetName(columnIndex), dataReader[columnIndex]);
+                    }
+                }
             }
         }
 
