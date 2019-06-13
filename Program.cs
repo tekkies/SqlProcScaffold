@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace SprocWrapper
 {
@@ -10,12 +7,54 @@ namespace SprocWrapper
     {
         static void Main(string[] args)
         {
-            // The code provided will print ‘Hello World’ to the console.
-            // Press Ctrl+F5 (or go to Debug > Start Without Debugging) to run your app.
-            Console.WriteLine("How hard can it be?");
-            Console.ReadKey();
+            var connectionString = args[0];
+            var like = args[1];
+            Logger.Log(connectionString);
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Open();
+                var procs = GetProcs(sqlConnection, like);
+                foreach (var proc in procs)
+                {
+                    using (var dataReader = new SprocWrapper.Procs.Dbo.sp_procedure_params_rowset(sqlConnection, proc).ExecuteDataReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                            for (int columnIndex = 0; columnIndex < dataReader.FieldCount; columnIndex++)
+                            {
+                                Logger.Log("    {0}={1}",dataReader.GetName(columnIndex), dataReader[columnIndex]);
+                            }
+                        }
+                    }
+                }
 
-            // Go to http://aka.ms/dotnet-get-started-console to continue learning how to build a console app! 
+            }
+        }
+
+        private static List<string> GetProcs(SqlConnection sqlConnection, string like)
+        {
+            var procs = new List<string>();
+            using (var dataReader = new QueryBuilder(sqlConnection,
+                    @"SELECT  
+                    SS.name AS[schema],
+                    SO.name
+                        FROM sys.objects SO
+                    LEFT JOIN sys.schemas SS ON SO.schema_id = SS.schema_id
+                    WHERE SO.type = 'P'
+                    AND SO.name like @0",
+                    like)
+                .ExecuteDataReader())
+            {
+                while (dataReader.Read())
+                {
+                    var schema = dataReader.GetString(0);
+                    var procName = dataReader.GetString(1);
+                    procs.Add(procName);
+                    Logger.Log("[{0}].[{1}]", schema, procName);
+                }
+            }
+
+            return procs;
         }
     }
 }
