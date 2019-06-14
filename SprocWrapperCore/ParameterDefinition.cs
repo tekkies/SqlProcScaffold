@@ -2,11 +2,23 @@ namespace SprocWrapper
 {
     internal class ParameterDefinition
     {
-        public string Name { get; }
+        public string NameWithAt { get; }
+        public string SqlType { get; }
+        public string NameWithoutAt { get; }
 
-        public ParameterDefinition(string name)
+        public string CSharpType => GetCSharpType();
+
+        public ParameterDefinition(string nameWithAt, string sqlType)
         {
-            Name = name;
+            NameWithAt = nameWithAt;
+            SqlType = sqlType;
+            NameWithoutAt = nameWithAt.Substring(1);
         }
+
+        private string GetCSharpType()
+        {
+            return SqlToCSharpTypeMapper.MapSqlToCSharp(SqlType);
+        }
+
     }
 }

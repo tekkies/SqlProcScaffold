@@ -12,6 +12,7 @@ namespace SprocWrapper
         private string _namespace;
         private int _indentationLevel=0;
         private string _indentationPadding = String.Empty;
+        private ProcDefinition _procDefinition;
 
         public ProcComposer(SqlConnection sqlConnection, ProcIdentifier procIdentifier)
         {
@@ -22,7 +23,7 @@ namespace SprocWrapper
 
         public void Compose()
         {
-            var procDefinition = new ProcParser(_sqlConnection).ParseProc(_procIdentifier);
+            _procDefinition = new ProcParser(_sqlConnection).ParseProc(_procIdentifier);
             using (_streamWriter = OpenStreamWriter())
             {
                 WriteUsings();
@@ -36,12 +37,12 @@ namespace SprocWrapper
                         OpenBrace();
                         {
                             WriteMethodHeader();
-                            OpenParen();
+                            OpenParenthesis();
                             {
                                 WriteLine("SqlConnection sqlConnection,");
                                 WriteParameters();
                             }
-                            CloseParen();
+                            CloseParenthesis();
                         }
                         CloseBrace();
                     }
@@ -53,16 +54,25 @@ namespace SprocWrapper
 
         private void WriteParameters()
         {
-            //throw new NotImplementedException();
+            for(var index = 1; index < _procDefinition.Parameters.Count; index++)
+            {
+                var parameterDefinition = _procDefinition.Parameters[index];
+                WriteParameter(parameterDefinition);
+            }
         }
 
-        private void CloseParen()
+        private void WriteParameter(ParameterDefinition parameterDefinition)
+        {
+            WriteLine($"{parameterDefinition.CSharpType} {parameterDefinition.NameWithoutAt}");
+        }
+
+        private void CloseParenthesis()
         {
             IncrementIndentation(-1);
             WriteLine(")");
         }
 
-        private void OpenParen()
+        private void OpenParenthesis()
         {
             WriteLine("(");
             IncrementIndentation(1);
@@ -71,7 +81,7 @@ namespace SprocWrapper
 
         private void WriteMethodHeader()
         {
-            WriteLine($"public {_procIdentifier.Name}(");
+            WriteLine($"public {_procIdentifier.Name}");
         }
 
         private void WriteProcClassHeader()

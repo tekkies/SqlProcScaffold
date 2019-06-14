@@ -20,7 +20,8 @@ namespace SprocWrapper
                 while (dataReader.Read())
                 {
                     var name = dataReader["PARAMETER_NAME"].ToString();
-                    procDefinition.Parameters.Add(new ParameterDefinition(name));
+                    var sqlType = dataReader["TYPE_NAME"].ToString();
+                    procDefinition.Parameters.Add(new ParameterDefinition(name, sqlType));
                 }
             }
 
