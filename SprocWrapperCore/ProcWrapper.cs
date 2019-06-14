@@ -1,8 +1,25 @@
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
 namespace SprocWrapper
 {
+    internal class ProcIdentifier
+    {
+        public ProcIdentifier(string name, string schema)
+        {
+            Name = name;
+            Schema = schema;
+        }
+
+        public string Name { get; private set; }
+        public string Schema { get; private set; }
+        public override string ToString()
+        {
+            return $"[{Schema}].[{Name}]";
+        }
+    }
+
     class ProcWrapper
     {
         public static void SprocWrapper(string connectionString, string like)
@@ -14,30 +31,17 @@ namespace SprocWrapper
                 var procs = GetProcs(sqlConnection, like);
                 foreach (var proc in procs)
                 {
-                    GetParams(sqlConnection, proc);
+                    var procComposer = new ProcComposer(sqlConnection, proc);
+                    procComposer.Compose();
                 }
 
                 new SprocWrapper.Procs.Dbo.sp_sproc_wrapper_test(sqlConnection, 1, 2, 3).Execute();
             }
         }
 
-        private static void GetParams(SqlConnection sqlConnection, string procName)
+        private static List<ProcIdentifier> GetProcs(SqlConnection sqlConnection, string like)
         {
-            using (var dataReader = new SprocWrapper.Procs.Dbo.sp_procedure_params_rowset(sqlConnection, procName).ExecuteDataReader())
-            {
-                while (dataReader.Read())
-                {
-                    for (int columnIndex = 0; columnIndex < dataReader.FieldCount; columnIndex++)
-                    {
-                        Logger.Log("    {0}={1}", dataReader.GetName(columnIndex), dataReader[columnIndex]);
-                    }
-                }
-            }
-        }
-
-        private static List<string> GetProcs(SqlConnection sqlConnection, string like)
-        {
-            var procs = new List<string>();
+            var procs = new List<ProcIdentifier>();
             using (var dataReader = new QueryBuilder(sqlConnection,
                     @"SELECT  
                     SS.name AS[schema],
@@ -53,11 +57,17 @@ namespace SprocWrapper
                 {
                     var schema = dataReader.GetString(0);
                     var procName = dataReader.GetString(1);
-                    procs.Add(procName);
-                    Logger.Log("[{0}].[{1}]", schema, procName);
+                    var procIdentifier = new ProcIdentifier(procName, schema);
+                    procs.Add(procIdentifier);
+                    Logger.Log(procIdentifier.ToString());
                 }
             }
             return procs;
+        }
+
+        private static void NewMethod(ProcIdentifier procIdentifier)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
