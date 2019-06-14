@@ -10,13 +10,19 @@ namespace SprocWrapper
             string cSharpType;
             switch (sqlType)
             {
-                case "char":
-                case "varchar":
-                case "text":
-                    cSharpType = "string";
+                case "bit":
+                    cSharpType = "bool";
                     break;
                 case "int":
                     cSharpType = "int";
+                    break;
+                case "char":
+                case "nchar":
+                case "varchar":
+                case "nvarchar":
+                case "text":
+                case "ntext":
+                    cSharpType = "string";
                     break;
                 default:
                     throw new NotImplementedException($"Unable to map SQL data type {sqlType} to C# data type");
