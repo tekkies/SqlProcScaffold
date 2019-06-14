@@ -40,8 +40,7 @@ namespace SprocWrapper
                             WriteMethodHeader();
                             OpenParenthesis();
                             {
-                                WriteLine("SqlConnection sqlConnection,");
-                                WriteParameters();
+                                WriteMethodParameters();
                             }
                             CloseParenthesis();
                             OpenBrace();
@@ -79,10 +78,11 @@ namespace SprocWrapper
             WriteLine($"CreateCommand(sqlConnection, nameof({_procIdentifier.Schema}.{_procIdentifier.Name}));");
         }
 
-        private void WriteParameters()
+        private void WriteMethodParameters()
         {
             var parameterLines = new List<string>();
-            for(var index = 1; index < _procDefinition.Parameters.Count; index++)
+            parameterLines.Add("SqlConnection sqlConnection");
+            for (var index = 1; index < _procDefinition.Parameters.Count; index++)
             {
                 var parameterDefinition = _procDefinition.Parameters[index];
                 parameterLines.Add(GetParameterLine(parameterDefinition));
