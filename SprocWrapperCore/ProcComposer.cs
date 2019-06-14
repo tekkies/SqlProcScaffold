@@ -22,14 +22,26 @@ namespace SprocWrapper
 
         public void Compose()
         {
+            var procDefinition = new ProcParser(_sqlConnection).ParseProc(_procIdentifier);
             using (_streamWriter = OpenStreamWriter())
             {
                 WriteUsings();
                 WriteNamespace();
                 OpenBrace();
-                new ProcParser(_sqlConnection).ParseProc(_procIdentifier);
+                {
+                    WriteClassDefinition();
+                    OpenBrace();
+
+
+                    CloseBrace();
+                }
                 CloseBrace();
             }
+        }
+
+        private void WriteClassDefinition()
+        {
+            WriteLine($"public partial class {_procIdentifier.Schema}");
         }
 
         private void CloseBrace()
