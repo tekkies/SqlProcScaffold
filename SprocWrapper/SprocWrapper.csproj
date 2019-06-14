@@ -47,6 +47,7 @@
     <Compile Include="Procs\Dbo.sp_sproc_wrapper_test.cs" />
     <Compile Include="Procs\Proc.cs" />
     <Compile Include="Procs\Procs.Dbo.cs" />
+    <Compile Include="ProcWrapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryBuilder.cs" />
