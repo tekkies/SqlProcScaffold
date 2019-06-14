@@ -6,7 +6,12 @@ namespace SprocWrapper.Procs
     {
         public class sp_sproc_wrapper_test : Proc
         {
-            public sp_sproc_wrapper_test(SqlConnection sqlConnection, int intNoDefault, int? intNullDefault, int? intNumericDefault)
+            public sp_sproc_wrapper_test(
+                SqlConnection sqlConnection, 
+                int intNoDefault, 
+                int? intNullDefault, 
+                int? intNumericDefault
+                )
             {
                 CreateCommand(sqlConnection, nameof(Dbo.sp_sproc_wrapper_test));
                 AddParameter(nameof(intNoDefault), intNoDefault);
