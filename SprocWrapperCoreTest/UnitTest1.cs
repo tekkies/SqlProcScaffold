@@ -13,7 +13,7 @@ namespace SprocWrapperCoreTest
             var sqlConnection = OpenDatabase();
             using (sqlConnection )
             {
-                using (var dataReader = new SprocWrapper.Procs.Dbo.sp_sproc_wrapper_test(sqlConnection, 1, 2, 3).ExecuteDataReader())
+                using (var dataReader = new SprocWrapper.Procs.dbo.sp_sproc_wrapper_test(sqlConnection, 1, 2, 3).ExecuteDataReader())
                 {
                     dataReader.Read();
                     Assert.AreEqual(1, dataReader.GetInt32(0));

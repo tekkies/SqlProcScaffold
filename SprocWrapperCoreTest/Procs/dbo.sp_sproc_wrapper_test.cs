@@ -2,7 +2,7 @@ using System.Data.SqlClient;
 
 namespace SprocWrapper.Procs
 {
-    public partial class Dbo
+    public partial class dbo
     {
         public class sp_sproc_wrapper_test : Proc
         {
@@ -13,7 +13,7 @@ namespace SprocWrapper.Procs
                 int? intNumericDefault
                 )
             {
-                CreateCommand(sqlConnection, nameof(Dbo.sp_sproc_wrapper_test));
+                CreateCommand(sqlConnection, nameof(dbo.sp_sproc_wrapper_test));
                 AddParameter(nameof(intNoDefault), intNoDefault);
                 AddParameterIfNotNull(nameof(intNullDefault), intNullDefault);
                 AddParameterIfNotNull(nameof(intNumericDefault), intNumericDefault);
