@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
 
@@ -54,16 +55,18 @@ namespace SprocWrapper
 
         private void WriteParameters()
         {
+            var parameterLines = new List<string>();
             for(var index = 1; index < _procDefinition.Parameters.Count; index++)
             {
                 var parameterDefinition = _procDefinition.Parameters[index];
-                WriteParameter(parameterDefinition);
+                parameterLines.Add(GetParameterLine(parameterDefinition));
             }
+            WriteLine(String.Join(","+Environment.NewLine+_indentationPadding, parameterLines));
         }
 
-        private void WriteParameter(ParameterDefinition parameterDefinition)
+        private string GetParameterLine(ParameterDefinition parameterDefinition)
         {
-            WriteLine($"{parameterDefinition.CSharpType} {parameterDefinition.NameWithoutAt}");
+            return $"{parameterDefinition.CSharpType} {parameterDefinition.NameWithoutAt}";
         }
 
         private void CloseParenthesis()
