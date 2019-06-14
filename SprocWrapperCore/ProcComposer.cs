@@ -9,11 +9,13 @@ namespace SprocWrapper
         private readonly SqlConnection _sqlConnection;
         private readonly ProcIdentifier _procIdentifier;
         private StreamWriter _streamWriter;
+        private string _namespace;
 
         public ProcComposer(SqlConnection sqlConnection, ProcIdentifier procIdentifier)
         {
             _sqlConnection = sqlConnection;
             _procIdentifier = procIdentifier;
+            _namespace = "Procs.dbo";
         }
 
         public void Compose()
@@ -43,7 +45,7 @@ namespace SprocWrapper
 
         private StreamWriter OpenStreamWriter()
         {
-            var fileName = $"{_procIdentifier.Schema}.{_procIdentifier.Name}";
+            var fileName = $"{_procIdentifier.Schema}.{_procIdentifier.Name}.cs";
             return new StreamWriter(fileName);
         }
     }

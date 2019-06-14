@@ -6,15 +6,14 @@ namespace SprocWrapper.Procs
     {
         public class sp_sproc_wrapper_test : Proc
         {
-            public sp_sproc_wrapper_test(SqlConnection sqlConnection, int i, int i1, int i2)
+            public sp_sproc_wrapper_test(SqlConnection sqlConnection,int intNoDefault, int? intNullDefault, int? intNumericDefault)
             {
-                throw new System.NotImplementedException();
+                CreateCommand(sqlConnection, nameof(Dbo.sp_sproc_wrapper_test));
+                AddParameter(nameof(intNoDefault), intNoDefault);
+                AddParameterIfNotNull(nameof(intNullDefault), intNullDefault);
+                AddParameterIfNotNull(nameof(intNumericDefault), intNumericDefault);
             }
 
-            public void Execute()
-            {
-                throw new System.NotImplementedException();
-            }
         }
     }
 }
