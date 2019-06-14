@@ -7,4 +7,4 @@ CREATE PROCEDURE sp_sproc_wrapper_test
     @intNullDefault int = null,
     @intNumericDefault int = 1
 AS
-    SELECT 1
+    SELECT @intNoDefault, @intNullDefault, @intNumericDefault

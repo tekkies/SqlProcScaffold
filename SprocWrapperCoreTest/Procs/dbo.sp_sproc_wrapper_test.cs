@@ -1,68 +1,18 @@
-    PROCEDURE_CATALOG=FieldView
-    PROCEDURE_SCHEMA=dbo
-    PROCEDURE_NAME=sp_sproc_wrapper_test;1
-    PARAMETER_NAME=@RETURN_VALUE
-    ORDINAL_POSITION=0
-    PARAMETER_TYPE=4
-    PARAMETER_HASDEFAULT=0
-    PARAMETER_DEFAULT=
-    IS_NULLABLE=False
-    DATA_TYPE=3
-    CHARACTER_MAXIMUM_LENGTH=
-    CHARACTER_OCTET_LENGTH=
-    NUMERIC_PRECISION=10
-    NUMERIC_SCALE=
-    DESCRIPTION=
-    TYPE_NAME=int
-    LOCAL_TYPE_NAME=int
-    PROCEDURE_CATALOG=FieldView
-    PROCEDURE_SCHEMA=dbo
-    PROCEDURE_NAME=sp_sproc_wrapper_test;1
-    PARAMETER_NAME=@intNoDefault
-    ORDINAL_POSITION=1
-    PARAMETER_TYPE=1
-    PARAMETER_HASDEFAULT=0
-    PARAMETER_DEFAULT=
-    IS_NULLABLE=True
-    DATA_TYPE=3
-    CHARACTER_MAXIMUM_LENGTH=
-    CHARACTER_OCTET_LENGTH=
-    NUMERIC_PRECISION=10
-    NUMERIC_SCALE=
-    DESCRIPTION=
-    TYPE_NAME=int
-    LOCAL_TYPE_NAME=int
-    PROCEDURE_CATALOG=FieldView
-    PROCEDURE_SCHEMA=dbo
-    PROCEDURE_NAME=sp_sproc_wrapper_test;1
-    PARAMETER_NAME=@intNullDefault
-    ORDINAL_POSITION=2
-    PARAMETER_TYPE=1
-    PARAMETER_HASDEFAULT=0
-    PARAMETER_DEFAULT=
-    IS_NULLABLE=True
-    DATA_TYPE=3
-    CHARACTER_MAXIMUM_LENGTH=
-    CHARACTER_OCTET_LENGTH=
-    NUMERIC_PRECISION=10
-    NUMERIC_SCALE=
-    DESCRIPTION=
-    TYPE_NAME=int
-    LOCAL_TYPE_NAME=int
-    PROCEDURE_CATALOG=FieldView
-    PROCEDURE_SCHEMA=dbo
-    PROCEDURE_NAME=sp_sproc_wrapper_test;1
-    PARAMETER_NAME=@intNumericDefault
-    ORDINAL_POSITION=3
-    PARAMETER_TYPE=1
-    PARAMETER_HASDEFAULT=0
-    PARAMETER_DEFAULT=
-    IS_NULLABLE=True
-    DATA_TYPE=3
-    CHARACTER_MAXIMUM_LENGTH=
-    CHARACTER_OCTET_LENGTH=
-    NUMERIC_PRECISION=10
-    NUMERIC_SCALE=
-    DESCRIPTION=
-    TYPE_NAME=int
-    LOCAL_TYPE_NAME=int
+using System.Data.SqlClient;
+
+namespace SprocWrapper.Procs
+{
+    public partial class Dbo
+    {
+        public class sp_sproc_wrapper_test : Proc
+        {
+            public sp_sproc_wrapper_test(SqlConnection sqlConnection, int intNoDefault, int? intNullDefault, int? intNumericDefault)
+            {
+                CreateCommand(sqlConnection, nameof(Dbo.sp_sproc_wrapper_test));
+                AddParameter(nameof(intNoDefault), intNoDefault);
+                AddParameterIfNotNull(nameof(intNullDefault), intNullDefault);
+                AddParameterIfNotNull(nameof(intNumericDefault), intNumericDefault);
+            }
+        }
+    }
+}

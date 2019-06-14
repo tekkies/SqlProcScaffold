@@ -45,7 +45,7 @@ namespace SprocWrapper
 
         private StreamWriter OpenStreamWriter()
         {
-            var fileName = $"{_procIdentifier.Schema}.{_procIdentifier.Name}.cs";
+            var fileName = $@"..\..\..\..\SprocWrapperCoreTest\Procs\{_procIdentifier.Schema}.{_procIdentifier.Name}.cs";
             return new StreamWriter(fileName);
         }
     }

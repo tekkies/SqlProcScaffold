@@ -13,7 +13,6 @@ namespace SprocWrapper.Procs
                 AddParameterIfNotNull(nameof(intNullDefault), intNullDefault);
                 AddParameterIfNotNull(nameof(intNumericDefault), intNumericDefault);
             }
-
         }
     }
 }
