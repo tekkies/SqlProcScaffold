@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SprocWrapper", "SprocWrapper\SprocWrapper.csproj", "{1AE08F15-8CB8-4593-B9E2-3868D4349F72}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SprocWrapper", "SprocWrapper.csproj", "{1AE08F15-8CB8-4593-B9E2-3868D4349F72}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
