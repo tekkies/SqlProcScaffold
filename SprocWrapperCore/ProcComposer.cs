@@ -61,15 +61,17 @@ namespace SprocWrapper
 
         private void AssignParameters()
         {
-            foreach (var parameterDefinition in _procDefinition.Parameters)
+            var parameterDefinitions = _procDefinition.Parameters;
+            for(var i=1;i<parameterDefinitions.Count;i++)
             {
+                var parameterDefinition = parameterDefinitions[i];
                 AssignParameter(parameterDefinition);
             }
         }
 
         private void AssignParameter(ParameterDefinition parameterDefinition)
         {
-            WriteLine($"AddParameterIfNotNull(\"{parameterDefinition.NameWithAt}\", {parameterDefinition.NameWithoutAt});");
+            WriteLine($"AddParameterIfNotNull(nameof({parameterDefinition.NameWithoutAt}), {parameterDefinition.NameWithoutAt});");
         }
 
         private void CreateCommand()
