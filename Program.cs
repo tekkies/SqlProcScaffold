@@ -19,7 +19,10 @@ namespace SprocWrapper
                     GetParams(sqlConnection, proc);
                 }
 
+                new SprocWrapper.Procs.Dbo.sp_sproc_wrapper_test(sqlConnection, 1,2,3).Execute();
+
             }
+
         }
 
         private static void GetParams(SqlConnection sqlConnection, string procName)

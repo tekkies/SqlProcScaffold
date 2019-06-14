@@ -44,6 +44,11 @@ namespace SprocWrapper.Procs
             {
                 return _command.ExecuteReader();
             }
+
+            public void Execute()
+            {
+                throw new System.NotImplementedException();
+            }
         }
     }
 }

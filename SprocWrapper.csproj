@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Procs\Dbo.sp_procedure_params_rowset.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="Procs\Dbo.sp_sproc_wrapper_test.cs" />
     <Compile Include="Procs\Proc.cs" />
     <Compile Include="Procs\Procs.Dbo.cs" />
     <Compile Include="Program.cs" />
@@ -54,7 +55,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SprocWrapperTest.sql" />
+    <Content Include="sp_sproc_wrapper_test.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
