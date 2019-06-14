@@ -34,8 +34,6 @@ namespace SprocWrapper
                     var procComposer = new ProcComposer(sqlConnection, proc);
                     procComposer.Compose();
                 }
-
-                new SprocWrapper.Procs.Dbo.sp_sproc_wrapper_test(sqlConnection, 1, 2, 3).Execute();
             }
         }
 
