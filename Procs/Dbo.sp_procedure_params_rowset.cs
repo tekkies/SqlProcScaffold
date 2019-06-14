@@ -1,4 +1,3 @@
-using System;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
@@ -7,16 +6,16 @@ namespace SprocWrapper.Procs
 {
     public partial class Dbo
     {
-        public class sp_procedure_params_rowset
+        public class sp_procedure_params_rowset : Proc
         {
-            private SqlCommand _command;
+            protected SqlCommand _command;
 
             public sp_procedure_params_rowset(SqlConnection sqlConnection, 
                 string procedure_name,
                 int? group_number=null,
                 string procedure_schema=null,
                 string parameter_name=null
-                )
+            )
             {
                 _command = sqlConnection.CreateCommand();
                 _command.CommandType = CommandType.StoredProcedure;

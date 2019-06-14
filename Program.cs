@@ -22,9 +22,9 @@ namespace SprocWrapper
             }
         }
 
-        private static void GetParams(SqlConnection sqlConnection, string proc)
+        private static void GetParams(SqlConnection sqlConnection, string procName)
         {
-            using (var dataReader = new SprocWrapper.Procs.Dbo.sp_procedure_params_rowset(sqlConnection, proc).ExecuteDataReader())
+            using (var dataReader = new SprocWrapper.Procs.Dbo.sp_procedure_params_rowset(sqlConnection, procName).ExecuteDataReader())
             {
                 while (dataReader.Read())
                 {
