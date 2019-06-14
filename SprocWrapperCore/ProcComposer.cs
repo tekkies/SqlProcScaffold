@@ -44,6 +44,11 @@ namespace SprocWrapper
                                 WriteParameters();
                             }
                             CloseParenthesis();
+                            OpenBrace();
+                            {
+                                WriteLine($"throw new System.NotImplementedException();");
+                            }
+                            CloseBrace();
                         }
                         CloseBrace();
                     }
