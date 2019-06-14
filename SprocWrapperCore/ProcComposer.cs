@@ -46,7 +46,8 @@ namespace SprocWrapper
                             CloseParenthesis();
                             OpenBrace();
                             {
-                                WriteLine($"throw new System.NotImplementedException();");
+                                CreateCommand();
+                                AssignParameters();
                             }
                             CloseBrace();
                         }
@@ -56,6 +57,24 @@ namespace SprocWrapper
                 }
                 CloseBrace();
             }
+        }
+
+        private void AssignParameters()
+        {
+            foreach (var parameterDefinition in _procDefinition.Parameters)
+            {
+                AssignParameter(parameterDefinition);
+            }
+        }
+
+        private void AssignParameter(ParameterDefinition parameterDefinition)
+        {
+            WriteLine($"AddParameterIfNotNull(\"{parameterDefinition.NameWithAt}\", {parameterDefinition.NameWithoutAt});");
+        }
+
+        private void CreateCommand()
+        {
+            WriteLine($"CreateCommand(sqlConnection, nameof({_procIdentifier.Schema}.{_procIdentifier.Name}));");
         }
 
         private void WriteParameters()
