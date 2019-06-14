@@ -27,7 +27,7 @@ namespace SprocWrapper
                 WriteUsings();
                 WriteNamespace();
                 OpenBrace();
-                GetParams();
+                new ProcParser(_sqlConnection).ParseProc(_procIdentifier);
                 CloseBrace();
             }
         }
@@ -36,21 +36,6 @@ namespace SprocWrapper
         {
             SetIndentation(-1);
             WriteLine("}");
-        }
-
-        private void GetParams()
-        {
-            using (var dataReader = new Procs.Dbo.sp_procedure_params_rowset(_sqlConnection, _procIdentifier.Name, procedure_schema: _procIdentifier.Schema).ExecuteDataReader())
-            {
-                while (dataReader.Read())
-                {
-                    for (int columnIndex = 0; columnIndex < dataReader.FieldCount; columnIndex++)
-                    {
-                        var line = String.Format("{0}={1}", dataReader.GetName(columnIndex), dataReader[columnIndex]);
-                        WriteLine(line);
-                    }
-                }
-            }
         }
 
         private void OpenBrace()
