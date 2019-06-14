@@ -1,3 +1,4 @@
+using System;
 using System.Data;
 
 namespace SprocWrapper
@@ -6,7 +7,7 @@ namespace SprocWrapper
     {
         public static string MapSqlToCSharp(string sqlType)
         {
-            var cSharpType = sqlType;
+            string cSharpType;
             switch (sqlType)
             {
                 case "char":
@@ -14,6 +15,11 @@ namespace SprocWrapper
                 case "text":
                     cSharpType = "string";
                     break;
+                case "int":
+                    cSharpType = "int";
+                    break;
+                default:
+                    throw new NotImplementedException($"Unable to map SQL data type {sqlType} to C# data type");
             }
             return cSharpType;
         }
