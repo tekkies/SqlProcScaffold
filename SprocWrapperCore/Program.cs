@@ -1,4 +1,5 @@
 ﻿using System;
+using SprocWrapper;
 
 namespace SprocWrapperCore
 {
@@ -6,7 +7,9 @@ namespace SprocWrapperCore
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var connectionString = args[0];
+            var like = args[1];
+            ProcWrapper.SprocWrapper(connectionString, like);
         }
     }
 }

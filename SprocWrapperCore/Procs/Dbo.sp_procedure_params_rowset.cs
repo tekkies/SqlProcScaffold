@@ -37,7 +37,7 @@ namespace SprocWrapper.Procs
             private void AddParameter(string name, object value)
             {
                 Logger.Log("AddParameter @{0} {1}", name, value);
-                _command.Parameters.Add($"@{name}", value);
+                _command.Parameters.Add(new SqlParameter($"@{name}", value));
             }
 
             public DbDataReader ExecuteDataReader()

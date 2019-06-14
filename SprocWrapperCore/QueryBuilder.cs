@@ -28,7 +28,7 @@ namespace SprocWrapper
 
         private void AddParameter(string name, object value)
         {
-            _command.Parameters.Add(name, value);
+            _command.Parameters.Add(new SqlParameter(name, value));
         }
 
         public DbDataReader ExecuteDataReader()
