@@ -29,13 +29,19 @@ namespace SprocWrapper
                 WriteNamespace();
                 OpenBrace();
                 {
-                    WriteSchemaClassDefinition();
+                    WriteSchemaClassHeader();
                     OpenBrace();
                     {
-                        WriteProcClassDefinition();
+                        WriteProcClassHeader();
                         OpenBrace();
                         {
-
+                            WriteMethodHeader();
+                            OpenParen();
+                            {
+                                WriteLine("SqlConnection sqlConnection,");
+                                WriteParameters();
+                            }
+                            CloseParen();
                         }
                         CloseBrace();
                     }
@@ -45,12 +51,35 @@ namespace SprocWrapper
             }
         }
 
-        private void WriteProcClassDefinition()
+        private void WriteParameters()
+        {
+            //throw new NotImplementedException();
+        }
+
+        private void CloseParen()
+        {
+            IncrementIndentation(-1);
+            WriteLine(")");
+        }
+
+        private void OpenParen()
+        {
+            WriteLine("(");
+            IncrementIndentation(1);
+
+        }
+
+        private void WriteMethodHeader()
+        {
+            WriteLine($"public {_procIdentifier.Name}(");
+        }
+
+        private void WriteProcClassHeader()
         {
             WriteLine($"public class {_procIdentifier.Name} : Proc");
         }
 
-        private void WriteSchemaClassDefinition()
+        private void WriteSchemaClassHeader()
         {
             WriteLine($"public partial class {_procIdentifier.Schema}");
         }
