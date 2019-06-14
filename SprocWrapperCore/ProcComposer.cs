@@ -29,38 +29,48 @@ namespace SprocWrapper
                 WriteNamespace();
                 OpenBrace();
                 {
-                    WriteClassDefinition();
+                    WriteSchemaClassDefinition();
                     OpenBrace();
+                    {
+                        WriteProcClassDefinition();
+                        OpenBrace();
+                        {
 
-
+                        }
+                        CloseBrace();
+                    }
                     CloseBrace();
                 }
                 CloseBrace();
             }
         }
 
-        private void WriteClassDefinition()
+        private void WriteProcClassDefinition()
+        {
+            WriteLine($"public class {_procIdentifier.Name} : Proc");
+        }
+
+        private void WriteSchemaClassDefinition()
         {
             WriteLine($"public partial class {_procIdentifier.Schema}");
         }
 
         private void CloseBrace()
         {
-            SetIndentation(-1);
+            IncrementIndentation(-1);
             WriteLine("}");
         }
 
         private void OpenBrace()
         {
             WriteLine("{");
-            SetIndentation(_indentationLevel + 1);
+            IncrementIndentation(1);
         }
 
-        private void SetIndentation(int increment)
+        private void IncrementIndentation(int increment)
         {
             _indentationLevel += increment;
             _indentationPadding = new String(' ', _indentationLevel*4);
-
         }
 
         private void WriteNamespace()
