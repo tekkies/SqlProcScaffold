@@ -12,7 +12,29 @@ namespace SqlProcScaffold
             PrintBanner();
             var connectionString = args[0];
             var like = args.Length >= 2 ? args[1] : "%";
-            ProcWrapper.SprocWrapper(connectionString, like);
+            var outputFolder = GetOutputFolder(args);
+            ProcWrapper.SprocWrapper(connectionString, like, outputFolder);
+        }
+
+        private static string GetOutputFolder(string[] args)
+        {
+            var outputFolder = GetDefaultOutputFolder();
+            if (args.Length >= 3)
+            {
+                outputFolder = args[2];
+            }
+            return outputFolder;
+        }
+
+        private static string GetDefaultOutputFolder()
+        {
+#if DEBUG
+            const string sqlProcScaffoldTestSourceFolder = @"..\..\..\..\SqlProcScaffoldTest\Procs";
+            string outputFolder = sqlProcScaffoldTestSourceFolder;
+#else
+            string outputFolder = String.Empty;
+#endif
+            return outputFolder;
         }
 
         private static void PrintBanner()

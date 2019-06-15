@@ -8,11 +8,12 @@ namespace SprocWrapper
 {
     class ProcWrapper
     {
-        private static string _outputFolder= @"..\..\..\..\SqlProcScaffoldTest\Procs";
+        private static string _outputFolder;
 
-        public static void SprocWrapper(string connectionString, string like)
+        public static void SprocWrapper(string connectionString, string like, string outputFolder)
         {
-            Logger.Log(connectionString);
+            _outputFolder = outputFolder;
+            Logger.Log("Database: {0}", connectionString);
             using (var sqlConnection = new SqlConnection(connectionString))
             {
                 sqlConnection.Open();
