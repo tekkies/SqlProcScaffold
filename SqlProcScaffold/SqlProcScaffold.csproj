@@ -6,14 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="sp_sproc_wrapper_test.sql" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="sp_sproc_wrapper_test.sql" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Ookii.CommandLine" Version="2.2.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.3.0" />
   </ItemGroup>

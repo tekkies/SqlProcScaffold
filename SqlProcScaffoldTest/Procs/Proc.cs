@@ -1,3 +1,4 @@
+//File auto-generated using https://github.com/tekkies/SqlProcScaffold
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
