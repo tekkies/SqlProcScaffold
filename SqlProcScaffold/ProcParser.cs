@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -26,8 +27,35 @@ namespace SprocWrapper
         {
             //sys.sp_procedure_params_rowset does not accurately reflect parameter defaults
             var script = GetProcedureScript(procDefinition);
-            var regex = new Regex(@"CREATE\s+PROCEDURE\s+(.*)\s+(@.*\s+)*\s+AS");
+            var parameterDefinitions = ParseParameterDefinitions(script);
+            for (var i = 1; i < procDefinition.Parameters.Count; i++)
+            {
+                UpdateParameterDefinitionWithHasDefault(procDefinition, i, parameterDefinitions);
+            }
+        }
+
+        private static void UpdateParameterDefinitionWithHasDefault(ProcDefinition procDefinition, int i, List<string> parameterDefinitions)
+        {
+            var nameWithoutAt = procDefinition.Parameters[i].NameWithoutAt;
+            var paramDefinition = parameterDefinitions[i - 1];
+            //TODO: Parse the parameter value for more reliability (it might be useful) https://dotnetfiddle.net/fHMeFk
+            var unreliableParameterHasDefault = paramDefinition.Contains(nameWithoutAt, StringComparison.OrdinalIgnoreCase) && paramDefinition.Contains("=", StringComparison.OrdinalIgnoreCase);
+            Logger.Log($"Parameter {nameWithoutAt}: HasDefault: {unreliableParameterHasDefault}");
+            procDefinition.Parameters[1].HasDefault = unreliableParameterHasDefault;
+        }
+
+        private static List<string> ParseParameterDefinitions(string script)
+        {
+            var regex = new Regex(@"CREATE\s+PROCEDURE\s+.*\s+(@.*\s+)*\s+AS");
             var match = regex.Match(script);
+            var parameterCaptures = match.Groups[1].Captures;
+            var parameterDefinitions = new List<string>();
+            foreach (var parameterCapture in parameterCaptures)
+            {
+                parameterDefinitions.Add(parameterCapture.ToString());
+            }
+
+            return parameterDefinitions;
         }
 
         private string GetProcedureScript(ProcDefinition procDefinition)

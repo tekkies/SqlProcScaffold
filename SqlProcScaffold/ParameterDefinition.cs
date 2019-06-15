@@ -7,6 +7,7 @@ namespace SprocWrapper
         public string NameWithoutAt { get; }
 
         public string CSharpType => GetCSharpType();
+        public bool HasDefault { get; set; }
 
         public ParameterDefinition(string nameWithAt, string sqlType)
         {
