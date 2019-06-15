@@ -41,8 +41,8 @@ namespace SprocWrapper
                         WriteProcClassHeader();
                         OpenBrace();
                         {
-                            WriteMethod(true);
                             WriteMethod(false);
+                            WriteMethod(true);
                         }
                         CloseBrace();
                     }
