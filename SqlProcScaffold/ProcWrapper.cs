@@ -4,24 +4,10 @@ using System.Data.SqlClient;
 
 namespace SprocWrapper
 {
-    internal class ProcIdentifier
-    {
-        public ProcIdentifier(string name, string schema)
-        {
-            Name = name;
-            Schema = schema;
-        }
-
-        public string Name { get; private set; }
-        public string Schema { get; private set; }
-        public override string ToString()
-        {
-            return $"[{Schema}].[{Name}]";
-        }
-    }
-
     class ProcWrapper
     {
+        private static string _outputFolder= @"..\..\..\..\SqlProcScaffoldTest";
+
         public static void SprocWrapper(string connectionString, string like)
         {
             Logger.Log(connectionString);
@@ -31,7 +17,7 @@ namespace SprocWrapper
                 var procs = GetProcs(sqlConnection, like);
                 foreach (var proc in procs)
                 {
-                    var procComposer = new ProcComposer(sqlConnection, proc);
+                    var procComposer = new ProcComposer(sqlConnection, proc, _outputFolder);
                     procComposer.Compose();
                 }
             }

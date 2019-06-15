@@ -14,12 +14,14 @@ namespace SprocWrapper
         private int _indentationLevel=0;
         private string _indentationPadding = String.Empty;
         private ProcDefinition _procDefinition;
+        private string _outputFolder;
 
-        public ProcComposer(SqlConnection sqlConnection, ProcIdentifier procIdentifier)
+        public ProcComposer(SqlConnection sqlConnection, ProcIdentifier procIdentifier, string outputFolder)
         {
             _sqlConnection = sqlConnection;
             _procIdentifier = procIdentifier;
             _namespace = "SprocWrapper.Procs";
+            _outputFolder = outputFolder;
         }
 
         public void Compose()
@@ -161,7 +163,7 @@ namespace SprocWrapper
 
         private StreamWriter OpenStreamWriter()
         {
-            var fileName = $@"..\..\..\..\SqlProcScaffoldTest\Procs\{_procIdentifier.Schema}.{_procIdentifier.Name}.cs";
+            var fileName = Path.Join(_outputFolder,$@"Procs\{_procIdentifier.Schema}.{_procIdentifier.Name}.cs");
             return new StreamWriter(fileName);
         }
     }
