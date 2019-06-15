@@ -109,6 +109,10 @@ namespace SprocWrapper
             {
                 parameterLine += " = null";
             }
+            else
+            {
+                parameterLine = "[NotNull] " + parameterLine;
+            }
             return parameterLine;
         }
 
@@ -166,6 +170,7 @@ namespace SprocWrapper
         private void WriteUsings()
         {
             WriteLine(@"using System.Data.SqlClient;");
+            WriteLine(@"using JetBrains.Annotations;");
             WriteLine(String.Empty);
         }
 
