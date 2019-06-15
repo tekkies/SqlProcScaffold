@@ -42,7 +42,9 @@ namespace SqlProcScaffold
             var file = Path.Join(_outputFolder, $"{className}.cs");
             using (var streamWriter = new StreamWriter(file))
             {
-                streamWriter.Write(SqlProcScaffold.Properties.Resources.Proc);
+                var templateCode = SqlProcScaffold.Properties.Resources.Proc;
+                var renderedCode = templateCode.Replace("namespace SprocWrapper.Procs", $"namespace {CommandLineParser.Request.NameSpace}");
+                streamWriter.Write(renderedCode);
             }
         }
 

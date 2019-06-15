@@ -2,7 +2,7 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 
-namespace SprocWrapper.Procs
+namespace SqlProcScaffoldTest.Procs
 {
     public class Proc
     {

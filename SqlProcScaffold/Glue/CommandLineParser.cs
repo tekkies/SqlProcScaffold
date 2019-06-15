@@ -18,6 +18,9 @@ namespace SqlProcScaffold
         [CommandLineArgument(Position = 0, IsRequired = true), Description(@"Connection string to the SqlServer")]
         public string ConnectionString { get; set; }
 
+        [CommandLineArgument(Position = 1, IsRequired = true), Description(@"Namespace for the generated code.")]
+        public string NameSpace { get; set; }
+
         [CommandLineArgument(Position = 2, DefaultValue = "%"), Description(
              @"Filter procedures by name. Wildcard is %. e.g.
 dbo.sp_get%
@@ -25,19 +28,19 @@ dbo.sp_get%
         public String Filter { get; set; }
 
         [CommandLineArgument(
-             Position = 3,
-    #if DEBUG    
+     Position = 3,
+#if DEBUG
             DefaultValue = @"..\..\..\..\SqlProcScaffoldTest\Procs"),
-    #else
+#else
             DefaultValue = String.Empty()),
-    #endif
+#endif
           Description(
-             @"Filter procedures by name. Wildcard is %. e.g.
+     @"Filter procedures by name. Wildcard is %. e.g.
         dbo.sp_get%
     ")]
         public String OutputFolder { get; set; }
 
-
+    
         [CommandLineArgument, Description("Addorn code with [NotNull] attributes.  This helps ReSharper warn you that a parameter is required.")]
         public bool UseNotNullAttribute { get; set; }
 
@@ -80,7 +83,7 @@ dbo.sp_get%
                 WriteUsageOptions options = new WriteUsageOptions() {IncludeDefaultValueInDescription = true, IncludeAliasInDescription = true};
                 parser.WriteUsageToConsole(options);
                 Logger.Log(Logger.Level.Info,"Example:");
-                Logger.Log(Logger.Level.Info, "    SqlProcScaffold.exe \"Server=myServerAddress;Database=...\" dbo.sp% C:\\src\\MyProj");
+                Logger.Log(Logger.Level.Info, "    SqlProcScaffold.exe \"Server=my...\" MyNameSpace dbo.sp% C:\\src\\MyProj");
             }
             return Request;
         }

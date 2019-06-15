@@ -1,6 +1,6 @@
 using System.Data.SqlClient;
 
-namespace SprocWrapper.Procs
+namespace SqlProcScaffoldTest.Procs
 {
     public partial class dbo
     {
