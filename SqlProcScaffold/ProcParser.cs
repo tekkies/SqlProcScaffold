@@ -1,6 +1,7 @@
 using System;
 using System.Data.SqlClient;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace SprocWrapper
 {
@@ -25,6 +26,8 @@ namespace SprocWrapper
         {
             //sys.sp_procedure_params_rowset does not accurately reflect parameter defaults
             var script = GetProcedureScript(procDefinition);
+            var regex = new Regex(@"CREATE\s+PROCEDURE\s+(.*)\s+(@.*\s+)*\s+AS");
+            var match = regex.Match(script);
         }
 
         private string GetProcedureScript(ProcDefinition procDefinition)
