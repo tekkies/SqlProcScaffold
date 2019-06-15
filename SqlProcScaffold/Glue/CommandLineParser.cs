@@ -18,24 +18,27 @@ namespace SqlProcScaffold
         [CommandLineArgument(Position = 0, IsRequired = true), Description(@"Connection string to the SqlServer")]
         public string ConnectionString { get; set; }
 
-        [CommandLineArgument(Position = 2, DefaultValue = "%"), Description(
+        [CommandLineArgument(Position = 1, DefaultValue = "%"), Description(
              @"Filter procedures by name. Wildcard is %. e.g.
 dbo.sp_get%
 ")]
         public String Filter { get; set; }
 
         [CommandLineArgument(
-             Position = 3,
-    #if DEBUG    
+     Position = 3,
+#if DEBUG
             DefaultValue = @"..\..\..\..\SqlProcScaffoldTest\Procs"),
-    #else
+#else
             DefaultValue = String.Empty()),
-    #endif
+#endif
           Description(
-             @"Filter procedures by name. Wildcard is %. e.g.
+     @"Filter procedures by name. Wildcard is %. e.g.
         dbo.sp_get%
     ")]
         public String OutputFolder { get; set; }
+
+        [CommandLineArgument(Position = 2, IsRequired = true), Description(@"Namespace for the generated code.")]
+        public string NameSpace { get; set; }
 
 
         [CommandLineArgument, Description("Addorn code with [NotNull] attributes.  This helps ReSharper warn you that a parameter is required.")]
