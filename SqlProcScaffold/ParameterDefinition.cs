@@ -4,20 +4,22 @@ namespace SprocWrapper
     {
         public string NameWithAt { get; }
         public string SqlType { get; }
+        public int OriginalOrder { get; }
         public string NameWithoutAt { get; }
 
-        public string CSharpType => GetCSharpType();
+        public bool HasDefault { get; set; }
 
-        public ParameterDefinition(string nameWithAt, string sqlType)
+        public ParameterDefinition(string nameWithAt, string sqlType, int originalOrder)
         {
             NameWithAt = nameWithAt;
             SqlType = sqlType;
+            OriginalOrder = originalOrder;
             NameWithoutAt = nameWithAt.Substring(1);
         }
 
-        private string GetCSharpType()
+        public string GetCSharpType(bool hasDefault)
         {
-            return SqlToCSharpTypeMapper.MapSqlToCSharp(SqlType);
+            return SqlToCSharpTypeMapper.MapSqlToCSharp(SqlType, hasDefault);
         }
 
     }

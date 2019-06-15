@@ -7,48 +7,95 @@ namespace SprocWrapperCoreTest
     [TestClass]
     public class UnitTest1
     {
+        private static SqlConnection _sqlConnection;
+
+        [ClassInitialize]
+        public static void ClassInitialize(TestContext testContext)
+        {
+            _sqlConnection = OpenDatabase();
+        }
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            SprocWrapper.Procs.dbo.sp_sproc_wrapper_test.DefaultConnection = null;
+        }
+
+        [ClassCleanup]
+        public static void ClassCleanup()
+        {
+            _sqlConnection.Dispose();
+            _sqlConnection = null;
+            SprocWrapper.Procs.dbo.sp_sproc_wrapper_test.DefaultConnection = null;
+        }
+
         [TestMethod]
         public void TestWithExplicitConnection()
         {
-            var sqlConnection = OpenDatabase();
-            using (sqlConnection )
+            using (var dataReader = new SprocWrapper.Procs.dbo.sp_sproc_wrapper_test(
+                _sqlConnection, 
+                1, 
+                "varcharNoDefault", 
+                2,
+                3,
+                "varcharNullDefault",
+                "varcharValueDefault").ExecuteDataReader())
             {
-                using (var dataReader = new SprocWrapper.Procs.dbo.sp_sproc_wrapper_test(
-                    sqlConnection, 
-                    1, 
-                    2, 
-                    3,
-                    "varcharNoDefault",
-                    "varcharNullDefault",
-                    "varcharValueDefault").ExecuteDataReader())
-                {
-                    dataReader.Read();
-                    Assert.AreEqual(1, dataReader.GetInt32(0));
-                }
+                dataReader.Read();
+                Assert.AreEqual(1, dataReader.GetInt32(0));
             }
         }
 
         [TestMethod]
         public void TestWithDefaultConnection()
         {
-            var sqlConnection = OpenDatabase();
-            using (sqlConnection)
+            SprocWrapper.Procs.Proc.DefaultConnection = _sqlConnection;
+            using (var dataReader = new SprocWrapper.Procs.dbo.sp_sproc_wrapper_test(
+                1,
+                "varcharNoDefault",
+                2,
+                3,
+                "varcharNullDefault",
+                "varcharValueDefault")
+                .ExecuteDataReader())
             {
-                SprocWrapper.Procs.Proc.DefaultConnection = sqlConnection;
-                using (var dataReader = new SprocWrapper.Procs.dbo.sp_sproc_wrapper_test(
-                    1,
-                    2,
-                    3,
-                    "varcharNoDefault",
-                    "varcharNullDefault",
-                    "varcharValueDefault").ExecuteDataReader())
-                {
-                    dataReader.Read();
-                    Assert.AreEqual(1, dataReader.GetInt32(0));
-                }
+                dataReader.Read();
+                Assert.AreEqual(1, dataReader.GetInt32(0));
             }
         }
 
+        [TestMethod]
+        public void TestWithNullValues()
+        {
+            SprocWrapper.Procs.Proc.DefaultConnection = _sqlConnection;
+            using (var dataReader = new SprocWrapper.Procs.dbo.sp_sproc_wrapper_test(
+                intNoDefault: 1,
+                intNullDefault: null,
+                intNumericDefault: null,
+                varcharNoDefault: null, //ToDo: Get a compile time error here?
+                varcharNullDefault: null,
+                varcharValueDefault: null)
+                .ExecuteDataReader())
+            {
+                dataReader.Read();
+                Assert.AreEqual(1, dataReader.GetInt32(0));
+            }
+        }
+        
+        [TestMethod]
+        public void TestWithSparseValues()
+        {
+            SprocWrapper.Procs.Proc.DefaultConnection = _sqlConnection;
+            using (var dataReader = new SprocWrapper.Procs.dbo.sp_sproc_wrapper_test(
+                    1,
+                    varcharNoDefault: "varcharNoDefault")
+                .ExecuteDataReader())
+            {
+                dataReader.Read();
+                Assert.AreEqual(1, dataReader.GetInt32(0));
+            }
+        }
+        
         private static SqlConnection OpenDatabase()
         {
             string connectionString = Environment.GetEnvironmentVariable("databaseConnectionString");
