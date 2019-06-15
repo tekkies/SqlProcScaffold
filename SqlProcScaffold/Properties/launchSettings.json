@@ -1,8 +1,7 @@
 {
   "profiles": {
     "SprocWrapperCore": {
-      "commandName": "Project",
-      "commandLineArgs": "\"%databaseConnectionString%\" \"%sp_sproc_wrapper_test%\""
+      "commandName": "Project"
     }
   }
 }

@@ -1,5 +1,5 @@
 # SqlProcScaffold
-Generate strongly typed C# SQL scaffold 
+Generate strongly typed C# SQL scaffold
 
 ##ToDo
 * Improve default parameter parsing from sp_helptext
@@ -8,3 +8,6 @@ Generate strongly typed C# SQL scaffold
 
 ## Limitations
 * Parameters may be re-ordered so that those with defaults come after those without
+
+##Acknowledgments
+* Ookii.CommandLine by Sven Groot (Ookii.org)

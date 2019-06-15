@@ -13,7 +13,6 @@ namespace SprocWrapper
         public static void SprocWrapper(string connectionString, string like, string outputFolder)
         {
             _outputFolder = outputFolder;
-            Logger.Log("Database: {0}", connectionString);
             using (var sqlConnection = new SqlConnection(connectionString))
             {
                 sqlConnection.Open();
@@ -61,11 +60,6 @@ namespace SprocWrapper
                 }
             }
             return procs;
-        }
-
-        private static void NewMethod(ProcIdentifier procIdentifier)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }
