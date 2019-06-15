@@ -61,6 +61,26 @@ namespace SqlProcScaffold.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MIT License
+        ///
+        ///Copyright (c) 2019 Andy Joiner
+        ///
+        ///Permission is hereby granted, free of charge, to any person obtaining a copy
+        ///of this software and associated documentation files (the &quot;Software&quot;), to deal
+        ///in the Software without restriction, including without limitation the rights
+        ///to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        ///copies of the Software, and to permit persons to whom the Software is
+        ///furnished to do so, subject to the following conditions:
+        ///
+        ///The above copyright no [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string LICENSE {
+            get {
+                return ResourceManager.GetString("LICENSE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to using System.Data;
         ///using System.Data.Common;
         ///using System.Data.SqlClient;
@@ -71,21 +91,32 @@ namespace SqlProcScaffold.Properties {
         ///    {
         ///        protected SqlCommand _command;
         ///
-        ///        protected void AddParameterIfNotNull(string name, object value)
+        ///        protected void AddParameterIfNotNull(string nameWithoutAt, object value)
         ///        {
         ///            if (value != null)
         ///            {
-        ///                AddParameter(name, value);
+        ///                AddParameter(nameWithoutAt, value);
         ///            }
         ///        }
         ///
         ///        protected void AddParameter(string name, object value)
         ///        {
-        ///            Logger.Log(&quot;AddParameter @{0} {1}&quot;, na [rest of string was truncated]&quot;;.
+        ///            _command.Parameters. [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Proc {
             get {
                 return ResourceManager.GetString("Proc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to # SqlProcScaffold
+        ///Generate strongly typed C# SQL scaffold 
+        ///.
+        /// </summary>
+        internal static string README {
+            get {
+                return ResourceManager.GetString("README", resourceCulture);
             }
         }
     }
