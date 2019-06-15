@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
+using SqlProcScaffold;
 
 namespace SprocWrapper
 {
@@ -111,7 +112,10 @@ namespace SprocWrapper
             }
             else
             {
-                parameterLine = "[NotNull] " + parameterLine;
+                if (CommandLineParser.Request.UseNotNullAttribute)
+                {
+                    parameterLine = "[NotNull] " + parameterLine;
+                }
             }
             return parameterLine;
         }
@@ -170,7 +174,11 @@ namespace SprocWrapper
         private void WriteUsings()
         {
             WriteLine(@"using System.Data.SqlClient;");
-            WriteLine(@"using JetBrains.Annotations;");
+            if (CommandLineParser.Request.UseNotNullAttribute)
+            {
+                WriteLine(@"using JetBrains.Annotations;");
+            }
+
             WriteLine(String.Empty);
         }
 
