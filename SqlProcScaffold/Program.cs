@@ -10,12 +10,10 @@ namespace SqlProcScaffold
     {
         static void Main(string[] args)
         {
-            var commandLine = CommandLineParser.Parse(args);
-            if (commandLine != null)
+            var request = CommandLineParser.Parse(args);
+            if (request != null)
             {
-                ProcWrapper.SprocWrapper(commandLine.ConnectionString,
-                    commandLine.Filter, 
-                    commandLine.OutputFolder);
+                ProcWrapper.SprocWrapper();
             }
         }
     }

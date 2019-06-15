@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
 using System.Net.Mime;
+using SqlProcScaffold;
 using SqlProcScaffold.Properties;
 
 namespace SprocWrapper
@@ -11,14 +12,14 @@ namespace SprocWrapper
     {
         private static string _outputFolder;
 
-        public static void SprocWrapper(string connectionString, string like, string outputFolder)
+        public static void SprocWrapper()
         {
-            _outputFolder = outputFolder;
-            using (var sqlConnection = new SqlConnection(connectionString))
+            _outputFolder = CommandLineParser.Request.OutputFolder;
+            using (var sqlConnection = new SqlConnection(CommandLineParser.Request.ConnectionString))
             {
                 sqlConnection.Open();
                 WriteBaseClass();
-                var procs = GetProcs(sqlConnection, like);
+                var procs = GetProcs(sqlConnection, CommandLineParser.Request.Filter);
                 CheckForNoProcs(procs);
                 foreach (var proc in procs)
                 {
@@ -32,7 +33,7 @@ namespace SprocWrapper
         {
             if (procs.Count == 0)
             {
-                Logger.Log("ERROR: No stored procedures found");
+                Logger.Log(Logger.Level.Error, "ERROR: No stored procedures found");
                 System.Environment.Exit(1);
             }
         }
@@ -67,7 +68,7 @@ namespace SprocWrapper
                     var procName = dataReader.GetString(1);
                     var procIdentifier = new ProcIdentifier(procName, schema);
                     procs.Add(procIdentifier);
-                    Logger.Log(procIdentifier.ToString());
+                    Logger.Log(Logger.Level.Info, procIdentifier.ToString());
                 }
             }
             return procs;

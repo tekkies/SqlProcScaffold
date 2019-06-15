@@ -68,15 +68,15 @@ dbo.sp_get%
             {
                 using (LineWrappingTextWriter writer = LineWrappingTextWriter.ForConsoleError())
                 {
-                    Logger.Log(ex.Message);
+                    Logger.Log(Logger.Level.Error, ex.Message);
                 }
             }
             if (Request == null)
             {
                 WriteUsageOptions options = new WriteUsageOptions() {IncludeDefaultValueInDescription = true, IncludeAliasInDescription = true};
                 parser.WriteUsageToConsole(options);
-                Logger.Log("Example:");
-                Logger.Log("    SqlProcScaffold.exe \"Server=myServerAddress;Database=...\" dbo.sp% C:\\src\\MyProj");
+                Logger.Log(Logger.Level.Info,"Example:");
+                Logger.Log(Logger.Level.Info, "    SqlProcScaffold.exe \"Server=myServerAddress;Database=...\" dbo.sp% C:\\src\\MyProj");
             }
             return Request;
         }
@@ -99,18 +99,18 @@ dbo.sp_get%
 
         private static void PrintLicense()
         {
-            Logger.Log(String.Empty);
-            Logger.Log(ProgramDescription);
-            Logger.Log(String.Empty);
-            Logger.Log(new string('-', 80));
-            Logger.Log(String.Empty);
-            Logger.Log(Properties.Resources.LICENSE);
-            Logger.Log(new string('-', 80));
-            Logger.Log(@"
+            Logger.Log(Logger.Level.Info, String.Empty);
+            Logger.Log(Logger.Level.Info, ProgramDescription);
+            Logger.Log(Logger.Level.Info, String.Empty);
+            Logger.Log(Logger.Level.Info, new string('-', 80));
+            Logger.Log(Logger.Level.Info, String.Empty);
+            Logger.Log(Logger.Level.Info, Properties.Resources.LICENSE);
+            Logger.Log(Logger.Level.Info, new string('-', 80));
+            Logger.Log(Logger.Level.Info, @"
 Acknowledgments:
     Ookii.CommandLine by Sven Groot (Ookii.org)
 ");
-            Logger.Log(new string('-', 80));
+            Logger.Log(Logger.Level.Info, new string('-', 80));
         }
     }
 }
