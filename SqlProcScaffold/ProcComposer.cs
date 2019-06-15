@@ -161,7 +161,7 @@ namespace SprocWrapper
 
         private StreamWriter OpenStreamWriter()
         {
-            var fileName = $@"..\..\..\..\SprocWrapperCoreTest\Procs\{_procIdentifier.Schema}.{_procIdentifier.Name}.cs";
+            var fileName = $@"..\..\..\..\SqlProcScaffoldTest\Procs\{_procIdentifier.Schema}.{_procIdentifier.Name}.cs";
             return new StreamWriter(fileName);
         }
     }
