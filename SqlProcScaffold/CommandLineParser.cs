@@ -38,6 +38,10 @@ dbo.sp_get%
         public String OutputFolder { get; set; }
 
 
+        [CommandLineArgument, Description("Addorn code with [NotNull] attributes.  This helps ReSharper warn you that a parameter is required.")]
+        public bool UseNotNullAttribute { get; set; }
+
+
         [CommandLineArgument, Description("Show license and acknowledgements.")]
         public bool ShowLicense { get; set; }
 

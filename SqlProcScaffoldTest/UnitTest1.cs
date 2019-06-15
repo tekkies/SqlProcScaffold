@@ -72,7 +72,7 @@ namespace SprocWrapperCoreTest
                 intNoDefault: 1,
                 intNullDefault: null,
                 intNumericDefault: null,
-                varcharNoDefault: null, //ToDo: Get a compile time error here?
+                varcharNoDefault: "varcharNoDefault",
                 varcharNullDefault: null,
                 varcharValueDefault: null)
                 .ExecuteDataReader())

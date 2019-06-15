@@ -1,4 +1,5 @@
 using System.Data.SqlClient;
+using JetBrains.Annotations;
 
 namespace SprocWrapper.Procs
 {
@@ -9,8 +10,8 @@ namespace SprocWrapper.Procs
             public sp_sproc_wrapper_test
             (
                 SqlConnection sqlConnection,
-                int intNoDefault,
-                string varcharNoDefault,
+                [NotNull] int intNoDefault,
+                [NotNull] string varcharNoDefault,
                 int? intNullDefault = null,
                 int? intNumericDefault = null,
                 string varcharNullDefault = null,
@@ -27,8 +28,8 @@ namespace SprocWrapper.Procs
             }
             public sp_sproc_wrapper_test
             (
-                int intNoDefault,
-                string varcharNoDefault,
+                [NotNull] int intNoDefault,
+                [NotNull] string varcharNoDefault,
                 int? intNullDefault = null,
                 int? intNumericDefault = null,
                 string varcharNullDefault = null,
