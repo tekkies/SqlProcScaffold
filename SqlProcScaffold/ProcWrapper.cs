@@ -21,6 +21,7 @@ namespace SprocWrapper
                 WriteBaseClass();
                 var procs = GetProcs(sqlConnection, CommandLineParser.Request.Filter);
                 CheckForNoProcs(procs);
+                Logger.Log(Logger.Level.Info, "Parsing parameters and writing output");
                 foreach (var proc in procs)
                 {
                     var procComposer = new ProcComposer(sqlConnection, proc, _outputFolder);
@@ -50,6 +51,7 @@ namespace SprocWrapper
 
         private static List<ProcIdentifier> GetProcs(SqlConnection sqlConnection, string like)
         {
+            Logger.Log(Logger.Level.Info, "Finding procedures");
             var procs = new List<ProcIdentifier>();
             using (var dataReader = new QueryBuilder(sqlConnection,
                     @"SELECT  
@@ -68,7 +70,7 @@ namespace SprocWrapper
                     var procName = dataReader.GetString(1);
                     var procIdentifier = new ProcIdentifier(procName, schema);
                     procs.Add(procIdentifier);
-                    Logger.Log(Logger.Level.Info, procIdentifier.ToString());
+                    Logger.Log(Logger.Level.Verbose, $"    {procIdentifier}");
                 }
             }
             return procs;

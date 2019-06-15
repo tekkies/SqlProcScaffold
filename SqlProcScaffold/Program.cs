@@ -14,6 +14,7 @@ namespace SqlProcScaffold
             if (request != null)
             {
                 ProcWrapper.SprocWrapper();
+                Logger.Log(Logger.Level.Info,"Done");
             }
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
 using System.Text.RegularExpressions;
+using SqlProcScaffold;
 
 namespace SprocWrapper
 {
@@ -21,10 +22,22 @@ namespace SprocWrapper
             ReadBasicParameterDefinition(procIdentifier, procDefinition);
             ParseParameterDefaults(procDefinition);
             procDefinition.SortParametersRequriedFirst();
+            Log(procDefinition);
             return procDefinition;
         }
 
-
+        private void Log(ProcDefinition procDefinition)
+        {
+            Logger.Log(Logger.Level.Verbose, $"    {procDefinition.Identifier}");
+            var procDefinitionParameters = procDefinition.Parameters;
+            for (var index = 1; index < procDefinitionParameters.Count; index++)
+            {
+                {
+                    var procDefinitionParameter = procDefinitionParameters[index];
+                    Logger.Log(Logger.Level.Verbose, $"        {procDefinitionParameter}");
+                }
+            }
+        }
 
         private void ParseParameterDefaults(ProcDefinition procDefinition)
         {
@@ -73,8 +86,6 @@ namespace SprocWrapper
                 {
                     script.Append(dataReader.GetString(0));
                 }
-
-                Logger.Log(Logger.Level.Verbose, script.ToString());
             }
             return script.ToString();
         }
