@@ -104,7 +104,7 @@ namespace SprocWrapper
 
         private string GetParameterLine(ParameterDefinition parameterDefinition)
         {
-            return $"{parameterDefinition.CSharpType} {parameterDefinition.NameWithoutAt}";
+            return $"{parameterDefinition.GetCSharpType(parameterDefinition.HasDefault)} {parameterDefinition.NameWithoutAt}";
         }
 
         private void CloseParenthesis()

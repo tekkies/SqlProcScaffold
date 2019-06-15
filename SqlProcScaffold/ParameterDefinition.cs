@@ -6,7 +6,6 @@ namespace SprocWrapper
         public string SqlType { get; }
         public string NameWithoutAt { get; }
 
-        public string CSharpType => GetCSharpType();
         public bool HasDefault { get; set; }
 
         public ParameterDefinition(string nameWithAt, string sqlType)
@@ -16,9 +15,9 @@ namespace SprocWrapper
             NameWithoutAt = nameWithAt.Substring(1);
         }
 
-        private string GetCSharpType()
+        public string GetCSharpType(bool hasDefault)
         {
-            return SqlToCSharpTypeMapper.MapSqlToCSharp(SqlType);
+            return SqlToCSharpTypeMapper.MapSqlToCSharp(SqlType, hasDefault);
         }
 
     }

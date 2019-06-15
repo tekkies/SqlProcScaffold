@@ -10,8 +10,8 @@ namespace SprocWrapper.Procs
             (
                 SqlConnection sqlConnection,
                 int intNoDefault,
-                int intNullDefault,
-                int intNumericDefault,
+                int? intNullDefault,
+                int? intNumericDefault,
                 string varcharNoDefault,
                 string varcharNullDefault,
                 string varcharValueDefault
@@ -28,8 +28,8 @@ namespace SprocWrapper.Procs
             public sp_sproc_wrapper_test
             (
                 int intNoDefault,
-                int intNullDefault,
-                int intNumericDefault,
+                int? intNullDefault,
+                int? intNumericDefault,
                 string varcharNoDefault,
                 string varcharNullDefault,
                 string varcharValueDefault

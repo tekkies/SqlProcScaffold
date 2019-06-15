@@ -28,20 +28,22 @@ namespace SprocWrapper
             //sys.sp_procedure_params_rowset does not accurately reflect parameter defaults
             var script = GetProcedureScript(procDefinition);
             var parameterDefinitions = ParseParameterDefinitions(script);
-            for (var i = 1; i < procDefinition.Parameters.Count; i++)
+            for (var parameterIndex = 1; parameterIndex < procDefinition.Parameters.Count; parameterIndex++)
             {
-                UpdateParameterDefinitionWithHasDefault(procDefinition, i, parameterDefinitions);
+                UpdateParameterDefinitionWithHasDefault(procDefinition, parameterIndex, parameterDefinitions);
             }
         }
 
-        private static void UpdateParameterDefinitionWithHasDefault(ProcDefinition procDefinition, int i, List<string> parameterDefinitions)
+        private static void UpdateParameterDefinitionWithHasDefault(ProcDefinition procDefinition, int parameterIndex, List<string> parameterDefinitions)
         {
-            var nameWithoutAt = procDefinition.Parameters[i].NameWithoutAt;
-            var paramDefinition = parameterDefinitions[i - 1];
+            var nameWithoutAt = procDefinition.Parameters[parameterIndex].NameWithoutAt;
+            var paramDefinition = parameterDefinitions[parameterIndex - 1];
             //TODO: Parse the parameter value for more reliability (it might be useful) https://dotnetfiddle.net/fHMeFk
-            var unreliableParameterHasDefault = paramDefinition.Contains(nameWithoutAt, StringComparison.OrdinalIgnoreCase) && paramDefinition.Contains("=", StringComparison.OrdinalIgnoreCase);
+            var unreliableParameterHasDefault = 
+                paramDefinition.Contains(nameWithoutAt, StringComparison.OrdinalIgnoreCase) 
+                && paramDefinition.Contains("=", StringComparison.OrdinalIgnoreCase);
             Logger.Log($"Parameter {nameWithoutAt}: HasDefault: {unreliableParameterHasDefault}");
-            procDefinition.Parameters[1].HasDefault = unreliableParameterHasDefault;
+            procDefinition.Parameters[parameterIndex].HasDefault = unreliableParameterHasDefault;
         }
 
         private static List<string> ParseParameterDefinitions(string script)
