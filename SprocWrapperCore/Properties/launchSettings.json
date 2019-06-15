@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SprocWrapperCore": {
+      "commandName": "Project",
+      "commandLineArgs": "\"%databaseConnectionString%\""
+    }
+  }
+}
