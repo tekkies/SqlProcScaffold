@@ -18,7 +18,7 @@ namespace SprocWrapperCoreTest
         [TestInitialize]
         public void TestInitialize()
         {
-            SprocWrapper.Procs.dbo.sp_sproc_wrapper_test.DefaultConnection = null;
+            SqlProcScaffoldTest.Procs.dbo.sp_sproc_wrapper_test.DefaultConnection = null;
         }
 
         [ClassCleanup]
@@ -26,13 +26,13 @@ namespace SprocWrapperCoreTest
         {
             _sqlConnection.Dispose();
             _sqlConnection = null;
-            SprocWrapper.Procs.dbo.sp_sproc_wrapper_test.DefaultConnection = null;
+            SqlProcScaffoldTest.Procs.dbo.sp_sproc_wrapper_test.DefaultConnection = null;
         }
 
         [TestMethod]
         public void TestWithExplicitConnection()
         {
-            using (var dataReader = new SprocWrapper.Procs.dbo.sp_sproc_wrapper_test(
+            using (var dataReader = new SqlProcScaffoldTest.Procs.dbo.sp_sproc_wrapper_test(
                 _sqlConnection, 
                 1, 
                 "varcharNoDefault", 
@@ -49,8 +49,8 @@ namespace SprocWrapperCoreTest
         [TestMethod]
         public void TestWithDefaultConnection()
         {
-            SprocWrapper.Procs.Proc.DefaultConnection = _sqlConnection;
-            using (var dataReader = new SprocWrapper.Procs.dbo.sp_sproc_wrapper_test(
+            SqlProcScaffoldTest.Procs.Proc.DefaultConnection = _sqlConnection;
+            using (var dataReader = new SqlProcScaffoldTest.Procs.dbo.sp_sproc_wrapper_test(
                 1,
                 "varcharNoDefault",
                 2,
@@ -67,8 +67,8 @@ namespace SprocWrapperCoreTest
         [TestMethod]
         public void TestWithNullValues()
         {
-            SprocWrapper.Procs.Proc.DefaultConnection = _sqlConnection;
-            using (var dataReader = new SprocWrapper.Procs.dbo.sp_sproc_wrapper_test(
+            SqlProcScaffoldTest.Procs.Proc.DefaultConnection = _sqlConnection;
+            using (var dataReader = new SqlProcScaffoldTest.Procs.dbo.sp_sproc_wrapper_test(
                 intNoDefault: 1,
                 intNullDefault: null,
                 intNumericDefault: null,
@@ -85,8 +85,8 @@ namespace SprocWrapperCoreTest
         [TestMethod]
         public void TestWithSparseValues()
         {
-            SprocWrapper.Procs.Proc.DefaultConnection = _sqlConnection;
-            using (var dataReader = new SprocWrapper.Procs.dbo.sp_sproc_wrapper_test(
+            SqlProcScaffoldTest.Procs.Proc.DefaultConnection = _sqlConnection;
+            using (var dataReader = new SqlProcScaffoldTest.Procs.dbo.sp_sproc_wrapper_test(
                     1,
                     varcharNoDefault: "varcharNoDefault")
                 .ExecuteDataReader())

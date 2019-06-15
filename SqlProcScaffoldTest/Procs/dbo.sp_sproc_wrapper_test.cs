@@ -1,7 +1,7 @@
 using System.Data.SqlClient;
 using JetBrains.Annotations;
 
-namespace SprocWrapper.Procs
+namespace SqlProcScaffoldTest.Procs
 {
     public partial class dbo
     {
