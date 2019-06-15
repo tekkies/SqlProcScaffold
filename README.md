@@ -1,6 +1,25 @@
 # SqlProcScaffold
 Generate strongly typed C# SQL scaffold
 
+## Features
+
+### Reduced boilerplate
+![alt text](doc/screenshot-before-vs-after.png "Screenshot: Before vs after")
+
+### IDE support
+Type ahead.
+![alt text](doc/screenshot-ide-support-1.png "Screenshot: IDE Support")
+
+Parameter names and types.
+![alt text](doc/screenshot-ide-support-2.png "Screenshot: IDE Support")
+
+### Only specify the params you neeed to
+You don't have to specify all params.
+![alt text](doc/screenshot-sparse-params.png "Screenshot: Sparse params")
+
+[Resharper](https://www.jetbrains.com/resharper/) warns you missed a required proc param. `-UseNotNullAttribute`
+![alt text](doc/screenshot-required-param.png "Screenshot: Required pararams")
+
 ## ToDo
 * [ ] Improve default parameter parsing from sp_helptext
 * [ ] Option to continue on error
@@ -50,12 +69,6 @@ Example:
     SqlProcScaffold.exe "Server=my..." MyNameSpace dbo.sp% C:\src\MyProj
 ~~~
 
-## Features
-
-### NotNull hits
-Use command line argument `-UseNotNullAttribute` to empower [Resharper](https://www.jetbrains.com/resharper/) to warn the developer that a parameter should not be null.
-
-![alt text](doc/screenshot-notnull-hint.png "Screenshot: Resharper hint that a parameter should not be null")
 
 ## Acknowledgments
 * Ookii.CommandLine by Sven Groot (Ookii.org)
