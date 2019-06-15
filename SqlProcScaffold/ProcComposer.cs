@@ -163,7 +163,7 @@ namespace SprocWrapper
 
         private StreamWriter OpenStreamWriter()
         {
-            var fileName = Path.Join(_outputFolder,$@"Procs\{_procIdentifier.Schema}.{_procIdentifier.Name}.cs");
+            var fileName = Path.Join(_outputFolder,$@"{_procIdentifier.Schema}.{_procIdentifier.Name}.cs");
             return new StreamWriter(fileName);
         }
     }

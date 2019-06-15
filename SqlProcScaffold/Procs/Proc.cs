@@ -8,17 +8,16 @@ namespace SprocWrapper.Procs
     {
         protected SqlCommand _command;
 
-        protected void AddParameterIfNotNull(string name, object value)
+        protected void AddParameterIfNotNull(string nameWithoutAt, object value)
         {
             if (value != null)
             {
-                AddParameter(name, value);
+                AddParameter(nameWithoutAt, value);
             }
         }
 
         protected void AddParameter(string name, object value)
         {
-            Logger.Log("AddParameter @{0} {1}", name, value);
             _command.Parameters.Add(new SqlParameter($"@{name}", value));
         }
 
