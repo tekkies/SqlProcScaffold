@@ -1,5 +1,6 @@
 using System;
 using System.Data.SqlClient;
+using System.Text;
 
 namespace SprocWrapper
 {
@@ -22,9 +23,24 @@ namespace SprocWrapper
 
         private void ParseParameterDefaults(ProcDefinition procDefinition)
         {
+            //sys.sp_procedure_params_rowset does not accurately reflect parameter defaults
+            var script = GetProcedureScript(procDefinition);
+        }
+
+        private string GetProcedureScript(ProcDefinition procDefinition)
+        {
             var nameWithSchema = $"{procDefinition.Identifier.Schema}.{procDefinition.Identifier.Name}";
-            var script = new SprocWrapper.Procs.sys.sp_helptext(_sqlConnection, nameWithSchema).ExecuteScalar();
-            Logger.Log(script.ToString());
+            var script = new StringBuilder();
+            using (var dataReader = new SprocWrapper.Procs.sys.sp_helptext(_sqlConnection, nameWithSchema).ExecuteDataReader())
+            {
+                while (dataReader.Read())
+                {
+                    script.Append(dataReader.GetString(0));
+                }
+
+                Logger.Log(script.ToString());
+            }
+            return script.ToString();
         }
 
         private void ReadBasicParameterDefinition(ProcIdentifier procIdentifier, ProcDefinition procDefinition)
