@@ -17,6 +17,11 @@ namespace SprocWrapper
             NameWithoutAt = nameWithAt.Substring(1);
         }
 
+        public override string ToString()
+        {
+            return $@"{NameWithAt}";
+        }
+
         public string GetCSharpType(bool hasDefault)
         {
             return SqlToCSharpTypeMapper.MapSqlToCSharp(SqlType, hasDefault);

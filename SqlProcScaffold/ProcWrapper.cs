@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
+using System.Net.Mime;
+using SqlProcScaffold;
 using SqlProcScaffold.Properties;
 
 namespace SprocWrapper
@@ -10,20 +12,30 @@ namespace SprocWrapper
     {
         private static string _outputFolder;
 
-        public static void SprocWrapper(string connectionString, string like, string outputFolder)
+        public static void SprocWrapper()
         {
-            _outputFolder = outputFolder;
-            Logger.Log("Database: {0}", connectionString);
-            using (var sqlConnection = new SqlConnection(connectionString))
+            _outputFolder = CommandLineParser.Request.OutputFolder;
+            using (var sqlConnection = new SqlConnection(CommandLineParser.Request.ConnectionString))
             {
                 sqlConnection.Open();
                 WriteBaseClass();
-                var procs = GetProcs(sqlConnection, like);
+                var procs = GetProcs(sqlConnection, CommandLineParser.Request.Filter);
+                CheckForNoProcs(procs);
+                Logger.Log(Logger.Level.Info, "Parsing parameters and writing output");
                 foreach (var proc in procs)
                 {
                     var procComposer = new ProcComposer(sqlConnection, proc, _outputFolder);
                     procComposer.Compose();
                 }
+            }
+        }
+
+        private static void CheckForNoProcs(List<ProcIdentifier> procs)
+        {
+            if (procs.Count == 0)
+            {
+                Logger.Log(Logger.Level.Error, "ERROR: No stored procedures found");
+                System.Environment.Exit(1);
             }
         }
 
@@ -39,6 +51,7 @@ namespace SprocWrapper
 
         private static List<ProcIdentifier> GetProcs(SqlConnection sqlConnection, string like)
         {
+            Logger.Log(Logger.Level.Info, "Finding procedures");
             var procs = new List<ProcIdentifier>();
             using (var dataReader = new QueryBuilder(sqlConnection,
                     @"SELECT  
@@ -47,7 +60,7 @@ namespace SprocWrapper
                         FROM sys.objects SO
                     LEFT JOIN sys.schemas SS ON SO.schema_id = SS.schema_id
                     WHERE SO.type = 'P'
-                    AND SO.name like @0",
+                    AND SS.name+'.'+SO.name like @0",
                     like)
                 .ExecuteDataReader())
             {
@@ -57,15 +70,10 @@ namespace SprocWrapper
                     var procName = dataReader.GetString(1);
                     var procIdentifier = new ProcIdentifier(procName, schema);
                     procs.Add(procIdentifier);
-                    Logger.Log(procIdentifier.ToString());
+                    Logger.Log(Logger.Level.Verbose, $"    {procIdentifier}");
                 }
             }
             return procs;
-        }
-
-        private static void NewMethod(ProcIdentifier procIdentifier)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

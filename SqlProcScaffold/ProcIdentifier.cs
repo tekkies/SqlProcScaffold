@@ -12,7 +12,7 @@ namespace SprocWrapper
         public string Schema { get; private set; }
         public override string ToString()
         {
-            return $"[{Schema}].[{Name}]";
+            return $"{Schema}.{Name}";
         }
     }
 }

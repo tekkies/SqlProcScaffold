@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
 using System.Text.RegularExpressions;
+using SqlProcScaffold;
 
 namespace SprocWrapper
 {
@@ -21,12 +22,27 @@ namespace SprocWrapper
             ReadBasicParameterDefinition(procIdentifier, procDefinition);
             ParseParameterDefaults(procDefinition);
             procDefinition.SortParametersRequriedFirst();
+            Log(procDefinition);
             return procDefinition;
+        }
+
+        private void Log(ProcDefinition procDefinition)
+        {
+            Logger.Log(Logger.Level.Verbose, $"    {procDefinition.Identifier}");
+            var procDefinitionParameters = procDefinition.Parameters;
+            for (var index = 1; index < procDefinitionParameters.Count; index++)
+            {
+                {
+                    var procDefinitionParameter = procDefinitionParameters[index];
+                    Logger.Log(Logger.Level.Verbose, $"        {procDefinitionParameter}");
+                }
+            }
         }
 
         private void ParseParameterDefaults(ProcDefinition procDefinition)
         {
-            //sys.sp_procedure_params_rowset does not accurately reflect parameter defaults
+            //sys.sp_procedure_params_rowset does not accurately reflect parameter defaults.
+            //We have to parse it from the text
             var script = GetProcedureScript(procDefinition);
             var parameterDefinitions = ParseParameterDefinitions(script);
             for (var parameterIndex = 1; parameterIndex < procDefinition.Parameters.Count; parameterIndex++)
@@ -43,7 +59,6 @@ namespace SprocWrapper
             var unreliableParameterHasDefault = 
                 paramDefinition.Contains(nameWithoutAt, StringComparison.OrdinalIgnoreCase) 
                 && paramDefinition.Contains("=", StringComparison.OrdinalIgnoreCase);
-            Logger.Log($"Parameter {nameWithoutAt}: HasDefault: {unreliableParameterHasDefault}");
             procDefinition.Parameters[parameterIndex].HasDefault = unreliableParameterHasDefault;
         }
 
@@ -71,8 +86,6 @@ namespace SprocWrapper
                 {
                     script.Append(dataReader.GetString(0));
                 }
-
-                Logger.Log(script.ToString());
             }
             return script.ToString();
         }
