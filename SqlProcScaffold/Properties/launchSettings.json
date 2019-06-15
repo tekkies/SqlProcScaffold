@@ -2,7 +2,7 @@
   "profiles": {
     "SprocWrapperCore": {
       "commandName": "Project",
-      "commandLineArgs": "\"%databaseConnectionString%\" dbo.sp_sproc% -UseNotNullAttribute"
+      "commandLineArgs": "\"%databaseConnectionString%\" SprocWrapper.Procs dbo.sp_sproc% -UseNotNullAttribute"
     }
   }
 }

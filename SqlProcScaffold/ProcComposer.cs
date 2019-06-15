@@ -21,7 +21,7 @@ namespace SprocWrapper
         {
             _sqlConnection = sqlConnection;
             _procIdentifier = procIdentifier;
-            _namespace = "SprocWrapper.Procs";
+            _namespace = CommandLineParser.Request.NameSpace;
             _outputFolder = outputFolder;
         }
 
