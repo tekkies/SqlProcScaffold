@@ -30,6 +30,7 @@ namespace SprocWrapper
             _procDefinition = new ProcParser(_sqlConnection).ParseProc(_procIdentifier);
             using (_streamWriter = OpenStreamWriter())
             {
+                WriteAutoGenMessage();
                 WriteUsings();
                 WriteNamespace();
                 OpenBrace();
@@ -40,8 +41,8 @@ namespace SprocWrapper
                         WriteProcClassHeader();
                         OpenBrace();
                         {
-                            WriteMethod(true);
                             WriteMethod(false);
+                            WriteMethod(true);
                         }
                         CloseBrace();
                     }
@@ -49,6 +50,11 @@ namespace SprocWrapper
                 }
                 CloseBrace();
             }
+        }
+
+        private void WriteAutoGenMessage()
+        {
+            WriteLine(BaseClassComposer.AutoGenComment);
         }
 
         private void WriteMethod(bool includeConnectionParameter)

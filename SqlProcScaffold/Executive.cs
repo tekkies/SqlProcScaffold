@@ -15,7 +15,7 @@ namespace SqlProcScaffold
             using (var sqlConnection = new SqlConnection(CommandLineParser.Request.ConnectionString))
             {
                 sqlConnection.Open();
-                WriteBaseClass();
+                BaseClassComposer.WriteBaseClass();
                 var procs = GetProcs(sqlConnection, CommandLineParser.Request.Filter);
                 CheckForNoProcs(procs);
                 Logger.Log(Logger.Level.Info, "Parsing parameters and writing output");
@@ -33,18 +33,6 @@ namespace SqlProcScaffold
             {
                 Logger.Log(Logger.Level.Error, "ERROR: No stored procedures found");
                 System.Environment.Exit(1);
-            }
-        }
-
-        private static void WriteBaseClass()
-        {
-            var className = typeof(SprocWrapper.Procs.Proc).Name;
-            var file = Path.Join(_outputFolder, $"{className}.cs");
-            using (var streamWriter = new StreamWriter(file))
-            {
-                var templateCode = SqlProcScaffold.Properties.Resources.Proc;
-                var renderedCode = templateCode.Replace("namespace SprocWrapper.Procs", $"namespace {CommandLineParser.Request.NameSpace}");
-                streamWriter.Write(renderedCode);
             }
         }
 
