@@ -39,5 +39,16 @@ namespace SprocWrapper.Procs
             _command.CommandType = CommandType.StoredProcedure;
             _command.CommandText = procedureName;
         }
+
+        public object ExecuteScalar()
+        {
+            using (var dataReader = ExecuteDataReader())
+            {
+                dataReader.Read();
+                var scalar = dataReader[0];
+                System.Diagnostics.Debug.Assert(dataReader.Read() == false);
+                return scalar;
+            }
+        }
     }
 }
