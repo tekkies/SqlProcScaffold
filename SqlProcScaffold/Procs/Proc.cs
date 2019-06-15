@@ -8,6 +8,8 @@ namespace SprocWrapper.Procs
     {
         protected SqlCommand _command;
 
+        public static SqlConnection DefaultConnection { get; set; }
+
         protected void AddParameterIfNotNull(string nameWithoutAt, object value)
         {
             if (value != null)

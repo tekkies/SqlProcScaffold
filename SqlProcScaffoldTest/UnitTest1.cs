@@ -8,7 +8,7 @@ namespace SprocWrapperCoreTest
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestWithExplicitConnection()
         {
             var sqlConnection = OpenDatabase();
             using (sqlConnection )
@@ -17,6 +17,27 @@ namespace SprocWrapperCoreTest
                     sqlConnection, 
                     1, 
                     2, 
+                    3,
+                    "varcharNoDefault",
+                    "varcharNullDefault",
+                    "varcharValueDefault").ExecuteDataReader())
+                {
+                    dataReader.Read();
+                    Assert.AreEqual(1, dataReader.GetInt32(0));
+                }
+            }
+        }
+
+        [TestMethod]
+        public void TestWithDefaultConnection()
+        {
+            var sqlConnection = OpenDatabase();
+            using (sqlConnection)
+            {
+                SprocWrapper.Procs.Proc.DefaultConnection = sqlConnection;
+                using (var dataReader = new SprocWrapper.Procs.dbo.sp_sproc_wrapper_test(
+                    1,
+                    2,
                     3,
                     "varcharNoDefault",
                     "varcharNullDefault",

@@ -25,6 +25,24 @@ namespace SprocWrapper.Procs
                 AddParameterIfNotNull(nameof(varcharNullDefault), varcharNullDefault);
                 AddParameterIfNotNull(nameof(varcharValueDefault), varcharValueDefault);
             }
+            public sp_sproc_wrapper_test
+            (
+                int intNoDefault,
+                int intNullDefault,
+                int intNumericDefault,
+                string varcharNoDefault,
+                string varcharNullDefault,
+                string varcharValueDefault
+            )
+            {
+                CreateCommand(DefaultConnection, nameof(dbo.sp_sproc_wrapper_test));
+                AddParameterIfNotNull(nameof(intNoDefault), intNoDefault);
+                AddParameterIfNotNull(nameof(intNullDefault), intNullDefault);
+                AddParameterIfNotNull(nameof(intNumericDefault), intNumericDefault);
+                AddParameterIfNotNull(nameof(varcharNoDefault), varcharNoDefault);
+                AddParameterIfNotNull(nameof(varcharNullDefault), varcharNullDefault);
+                AddParameterIfNotNull(nameof(varcharValueDefault), varcharValueDefault);
+            }
         }
     }
 }
