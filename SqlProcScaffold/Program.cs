@@ -13,7 +13,7 @@ namespace SqlProcScaffold
             var request = CommandLineParser.Parse(args);
             if (request != null)
             {
-                ProcWrapper.SprocWrapper();
+                Executive.SprocWrapper();
                 Logger.Log(Logger.Level.Info,"Done");
             }
         }

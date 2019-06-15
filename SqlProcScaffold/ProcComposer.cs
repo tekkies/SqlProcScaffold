@@ -12,8 +12,8 @@ namespace SprocWrapper
         private readonly ProcIdentifier _procIdentifier;
         private StreamWriter _streamWriter;
         private string _namespace;
-        private int _indentationLevel=0;
-        private string _indentationPadding = String.Empty;
+        private int _indentationLevel;
+        private string _indentationPadding = string.Empty;
         private ProcDefinition _procDefinition;
         private string _outputFolder;
 

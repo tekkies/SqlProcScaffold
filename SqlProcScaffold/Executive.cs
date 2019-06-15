@@ -1,14 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
-using System.Net.Mime;
-using SqlProcScaffold;
-using SqlProcScaffold.Properties;
+using SprocWrapper;
 
-namespace SprocWrapper
+namespace SqlProcScaffold
 {
-    class ProcWrapper
+    class Executive
     {
         private static string _outputFolder;
 

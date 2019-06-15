@@ -5,6 +5,7 @@ Generate strongly typed C# SQL scaffold
 * Improve default parameter parsing from sp_helptext
 * Improve command line parser
 * Get compile time errors for nullrequired strings
+* Specify Namespace on command line
 
 ## Limitations
 * Parameters may be re-ordered so that those with defaults come after those without
