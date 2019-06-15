@@ -35,9 +35,9 @@ namespace SprocWrapperCoreTest
             using (var dataReader = new SprocWrapper.Procs.dbo.sp_sproc_wrapper_test(
                 _sqlConnection, 
                 1, 
-                2, 
+                "varcharNoDefault", 
+                2,
                 3,
-                "varcharNoDefault",
                 "varcharNullDefault",
                 "varcharValueDefault").ExecuteDataReader())
             {
@@ -52,9 +52,9 @@ namespace SprocWrapperCoreTest
             SprocWrapper.Procs.Proc.DefaultConnection = _sqlConnection;
             using (var dataReader = new SprocWrapper.Procs.dbo.sp_sproc_wrapper_test(
                 1,
+                "varcharNoDefault",
                 2,
                 3,
-                "varcharNoDefault",
                 "varcharNullDefault",
                 "varcharValueDefault")
                 .ExecuteDataReader())
@@ -75,6 +75,20 @@ namespace SprocWrapperCoreTest
                 varcharNoDefault: null, //ToDo: Get a compile time error here?
                 varcharNullDefault: null,
                 varcharValueDefault: null)
+                .ExecuteDataReader())
+            {
+                dataReader.Read();
+                Assert.AreEqual(1, dataReader.GetInt32(0));
+            }
+        }
+        
+        [TestMethod]
+        public void TestWithSparseValues()
+        {
+            SprocWrapper.Procs.Proc.DefaultConnection = _sqlConnection;
+            using (var dataReader = new SprocWrapper.Procs.dbo.sp_sproc_wrapper_test(
+                    1,
+                    varcharNoDefault: "varcharNoDefault")
                 .ExecuteDataReader())
             {
                 dataReader.Read();

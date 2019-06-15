@@ -20,6 +20,7 @@ namespace SprocWrapper
             var procDefinition = new ProcDefinition(procIdentifier);
             ReadBasicParameterDefinition(procIdentifier, procDefinition);
             ParseParameterDefaults(procDefinition);
+            procDefinition.SortParametersRequriedFirst();
             return procDefinition;
         }
 
@@ -84,7 +85,8 @@ namespace SprocWrapper
                 {
                     var name = dataReader["PARAMETER_NAME"].ToString();
                     var sqlType = dataReader["TYPE_NAME"].ToString();
-                    procDefinition.Parameters.Add(new ParameterDefinition(name, sqlType));
+                    var originalOrder = dataReader.GetInt16(dataReader.GetOrdinal("ORDINAL_POSITION"))-1;
+                    procDefinition.Parameters.Add(new ParameterDefinition(name, sqlType, originalOrder));
                 }
             }
         }
