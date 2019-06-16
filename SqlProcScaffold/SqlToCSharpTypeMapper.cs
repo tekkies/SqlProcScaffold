@@ -33,7 +33,7 @@ namespace SprocWrapper
                     cSharpType = "int?";
                     break;
                 case "datetime":
-                    cSharpType = "DateTime";
+                    cSharpType = "DateTime?";
                     break;
                 case "char":
                 case "nchar":

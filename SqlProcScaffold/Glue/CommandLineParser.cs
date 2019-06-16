@@ -48,7 +48,9 @@ dbo.sp_get%
         [CommandLineArgument, Description("Show license and acknowledgements.")]
         public bool ShowLicense { get; set; }
 
-
+        [CommandLineArgument, Description("Do not overwrite existing generated files.")]
+        public bool NoOverwrite { get; set; }
+        
         [CommandLineArgument, Alias("v"), Description("Print verbose information.")]
         public bool Verbose { get; set; }
 

@@ -13,48 +13,51 @@ namespace SprocWrapper
         private StreamWriter _streamWriter;
         private string _namespace;
         private int _indentationLevel;
-        private string _indentationPadding = string.Empty;
+        private string _indentationPadding = String.Empty;
         private ProcDefinition _procDefinition;
-        private string _outputFolder;
+        private string _fileName;
 
         public ProcComposer(SqlConnection sqlConnection, ProcIdentifier procIdentifier, string outputFolder)
         {
             _sqlConnection = sqlConnection;
             _procIdentifier = procIdentifier;
             _namespace = CommandLineParser.Request.NameSpace;
-            _outputFolder = outputFolder;
+            _fileName = Path.Join(outputFolder, $@"{_procIdentifier.Schema}.{_procIdentifier.Name}.cs");
         }
 
         public void Compose()
         {
-            _procDefinition = new ProcParser(_sqlConnection).ParseProc(_procIdentifier);
-            using (_streamWriter = OpenStreamWriter())
+            if (CheckForOverwrite(_fileName))
             {
-                WriteAutoGenMessage();
-                WriteUsings();
-                WriteNamespace();
-                OpenBrace();
+                _procDefinition = new ProcParser(_sqlConnection).ParseProc(_procIdentifier);
+                using (_streamWriter = OpenStreamWriter())
                 {
-                    WriteSchemaClassHeader();
+                    WriteAutoGenMessage();
+                    WriteUsings();
+                    WriteNamespace();
                     OpenBrace();
                     {
-                        WriteProcClassHeader();
+                        WriteSchemaClassHeader();
                         OpenBrace();
                         {
-                            WriteMethod(false);
-                            WriteMethod(true);
+                            WriteProcClassHeader();
+                            OpenBrace();
+                            {
+                                WriteMethod(false);
+                                WriteMethod(true);
+                            }
+                            CloseBrace();
                         }
                         CloseBrace();
                     }
                     CloseBrace();
-                }
-                CloseBrace();
+                } 
             }
         }
 
         private void WriteAutoGenMessage()
         {
-            WriteLine(BaseClassComposer.AutoGenComment);
+            WriteLine(AutoGenComment);
         }
 
         private void WriteMethod(bool includeConnectionParameter)
@@ -180,6 +183,7 @@ namespace SprocWrapper
         private void WriteUsings()
         {
             WriteLine(@"using System.Data.SqlClient;");
+            WriteLine(@"using System;");
             if (CommandLineParser.Request.UseNotNullAttribute)
             {
                 WriteLine(@"using JetBrains.Annotations;");
@@ -197,8 +201,34 @@ namespace SprocWrapper
 
         private StreamWriter OpenStreamWriter()
         {
-            var fileName = Path.Join(_outputFolder,$@"{_procIdentifier.Schema}.{_procIdentifier.Name}.cs");
-            return new StreamWriter(fileName);
+            return new StreamWriter(_fileName);
+        }
+
+        public const string AutoGenComment = "//File auto-generated using https://github.com/tekkies/SqlProcScaffold";
+
+        public static void WriteBaseClass()
+        {
+            var className = typeof(Procs.Proc).Name;
+            var file = Path.Join(CommandLineParser.Request.OutputFolder, $"{className}.cs");
+            if (CheckForOverwrite(file))
+            {
+                using (var streamWriter = new StreamWriter(file))
+                {
+                    var templateCode = SqlProcScaffold.Properties.Resources.Proc;
+                    var renderedCode = templateCode.Replace("namespace SprocWrapper.Procs", $"namespace {CommandLineParser.Request.NameSpace}");
+                    streamWriter.WriteLine(AutoGenComment);
+                    streamWriter.Write(renderedCode);
+                } 
+            }
+        }
+        private static bool CheckForOverwrite(string file)
+        {
+            var overwriteAllowed = !(CommandLineParser.Request.NoOverwrite && File.Exists(file));
+            if (!overwriteAllowed)
+            {
+                Logger.Log(Logger.Level.Info, $"Skippped {file}");
+            }
+            return overwriteAllowed;
         }
     }
 }
