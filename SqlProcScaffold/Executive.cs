@@ -15,7 +15,7 @@ namespace SqlProcScaffold
             using (var sqlConnection = new SqlConnection(CommandLineParser.Request.ConnectionString))
             {
                 sqlConnection.Open();
-                BaseClassComposer.WriteBaseClass();
+                ProcComposer.WriteBaseClass();
                 var procs = GetProcs(sqlConnection, CommandLineParser.Request.Filter);
                 CheckForNoProcs(procs);
                 Logger.Log(Logger.Level.Info, "Parsing parameters and writing output");

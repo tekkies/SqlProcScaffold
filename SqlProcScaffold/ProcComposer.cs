@@ -13,7 +13,7 @@ namespace SprocWrapper
         private StreamWriter _streamWriter;
         private string _namespace;
         private int _indentationLevel;
-        private string _indentationPadding = string.Empty;
+        private string _indentationPadding = String.Empty;
         private ProcDefinition _procDefinition;
         private string _outputFolder;
 
@@ -54,7 +54,7 @@ namespace SprocWrapper
 
         private void WriteAutoGenMessage()
         {
-            WriteLine(BaseClassComposer.AutoGenComment);
+            WriteLine(AutoGenComment);
         }
 
         private void WriteMethod(bool includeConnectionParameter)
@@ -200,6 +200,21 @@ namespace SprocWrapper
         {
             var fileName = Path.Join(_outputFolder,$@"{_procIdentifier.Schema}.{_procIdentifier.Name}.cs");
             return new StreamWriter(fileName);
+        }
+
+        public const string AutoGenComment = "//File auto-generated using https://github.com/tekkies/SqlProcScaffold";
+
+        public static void WriteBaseClass()
+        {
+            var className = typeof(Procs.Proc).Name;
+            var file = Path.Join(CommandLineParser.Request.OutputFolder, $"{className}.cs");
+            using (var streamWriter = new StreamWriter(file))
+            {
+                var templateCode = SqlProcScaffold.Properties.Resources.Proc;
+                var renderedCode = templateCode.Replace("namespace SprocWrapper.Procs", $"namespace {CommandLineParser.Request.NameSpace}");
+                streamWriter.WriteLine(AutoGenComment);
+                streamWriter.Write(renderedCode);
+            }
         }
     }
 }
