@@ -180,6 +180,7 @@ namespace SprocWrapper
         private void WriteUsings()
         {
             WriteLine(@"using System.Data.SqlClient;");
+            WriteLine(@"using System;");
             if (CommandLineParser.Request.UseNotNullAttribute)
             {
                 WriteLine(@"using JetBrains.Annotations;");
