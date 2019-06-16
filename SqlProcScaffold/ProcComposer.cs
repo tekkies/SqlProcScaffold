@@ -223,7 +223,7 @@ namespace SprocWrapper
         }
         private static bool CheckForOverwrite(string file)
         {
-            var overwriteAllowed = CommandLineParser.Request.NoOverwrite && File.Exists(file);
+            var overwriteAllowed = !(CommandLineParser.Request.NoOverwrite && File.Exists(file));
             if (!overwriteAllowed)
             {
                 Logger.Log(Logger.Level.Info, $"Skippped {file}");
