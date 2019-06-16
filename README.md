@@ -32,10 +32,9 @@ You don't have to specify all params.
 * Parameters may be re-ordered so that those with defaults come after those without
 
 ## Usage
-
 ~~~
 Usage: SqlProcScaffold.dll [-ConnectionString] <String> [-NameSpace] <String> [[-Filter] <String>] [[-OutputFolder]
-   <String>] [-Help] [-ShowLicense] [-UseNotNullAttribute] [-Verbose]
+   <String>] [-Help] [-NoOverwrite] [-ShowLicense] [-UseNotNullAttribute] [-Verbose]
 
     -ConnectionString <String>
         Connection string to the SqlServer
@@ -55,6 +54,9 @@ Usage: SqlProcScaffold.dll [-ConnectionString] <String> [-NameSpace] <String> [[
 
     -Help [<Boolean>]
         Displays this help message. Alias: -?.
+
+    -NoOverwrite [<Boolean>]
+        Do not overwrite existing generated files.
 
     -ShowLicense [<Boolean>]
         Show license and acknowledgements.
