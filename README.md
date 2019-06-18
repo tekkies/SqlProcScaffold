@@ -1,6 +1,8 @@
 # SqlProcScaffold
 Generate strongly typed C# SQL scaffold
 
+For wrapping stored procs when Scaffold-DbContext doesn't.
+
 ## Features
 
 ### Reduced boilerplate
