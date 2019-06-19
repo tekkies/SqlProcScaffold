@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="..\LICENSE" Link="Resources\LICENSE" />
+    <EmbeddedResource Include="Procs\Proc.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Ookii.CommandLine" Version="2.2.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.3.0" />
   </ItemGroup>
