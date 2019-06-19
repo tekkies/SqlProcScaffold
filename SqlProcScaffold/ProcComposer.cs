@@ -44,8 +44,7 @@ namespace SprocWrapper
                             WriteProcClassHeader();
                             OpenBrace();
                             {
-                                WriteMethod(false);
-                                WriteMethod(true);
+                                WriteMethod();
                             }
                             CloseBrace();
                         }
@@ -61,17 +60,16 @@ namespace SprocWrapper
             WriteLine(AutoGenComment);
         }
 
-        private void WriteMethod(bool includeConnectionParameter)
+        private void WriteMethod()
         {
             WriteMethodHeader();
             OpenParenthesis();
             {
-                WriteMethodParameters(includeConnectionParameter);
+                WriteMethodParameters();
             }
             CloseParenthesis();
             OpenBrace();
             {
-                CreateCommand(includeConnectionParameter);
                 AssignParameters();
             }
             CloseBrace();
@@ -92,19 +90,9 @@ namespace SprocWrapper
             WriteLine($"AddParameterIfNotNull(nameof({parameterDefinition.NameWithoutAt}), {parameterDefinition.NameWithoutAt});");
         }
 
-        private void CreateCommand(bool includeConnectionParameter)
-        {
-            var connection = includeConnectionParameter ? "sqlConnection" : "DefaultConnection";
-            WriteLine($"CreateCommand({connection}, nameof({_procIdentifier.Schema}.{_procIdentifier.Name}));");
-        }
-
-        private void WriteMethodParameters(bool explicitConnection)
+        private void WriteMethodParameters()
         {
             var parameterLines = new List<string>();
-            if (explicitConnection)
-            {
-                parameterLines.Add("SqlConnection sqlConnection");
-            }
             for (var index = 1; index < _procDefinition.Parameters.Count; index++)
             {
                 var parameterDefinition = _procDefinition.Parameters[index];
