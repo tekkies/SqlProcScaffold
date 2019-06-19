@@ -9,11 +9,9 @@
 	<owners>Andy Joiner</owners>
     <title>SqlProcScaffold (Install)</title>
     <authors>Andy Joiner</authors>
-    <!-- projectUrl is required for the community feed -->
     <projectUrl>https://github.com/tekkies/SqlProcScaffold</projectUrl>
     <!--<iconUrl>http://cdn.rawgit.com/__REPLACE_YOUR_REPO__/master/icons/sqlprocscaffold.png</iconUrl>-->
     <copyright>2019 Andy Joiner</copyright>
-    <!-- If there is a license Url available, it is required for the community feed -->
     <licenseUrl>https://raw.githubusercontent.com/tekkies/SqlProcScaffold/master/LICENSE</licenseUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>-->
     <projectSourceUrl>https://github.com/tekkies/SqlProcScaffold</projectSourceUrl>
