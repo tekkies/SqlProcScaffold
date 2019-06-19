@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!-- Test your packages in a test environment: https://github.com/chocolatey/chocolatey-test-environment -->
 <!-- Do not remove this test for UTF-8: if “Ω” doesn’t appear as greek uppercase omega letter enclosed in quotation marks, you should use an editor that supports UTF-8, not this one. -->
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
@@ -13,12 +12,12 @@
     <!--<iconUrl>http://cdn.rawgit.com/__REPLACE_YOUR_REPO__/master/icons/sqlprocscaffold.png</iconUrl>-->
     <copyright>2019 Andy Joiner</copyright>
     <licenseUrl>https://raw.githubusercontent.com/tekkies/SqlProcScaffold/master/LICENSE</licenseUrl>
-    <requireLicenseAcceptance>true</requireLicenseAcceptance>-->
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <projectSourceUrl>https://github.com/tekkies/SqlProcScaffold</projectSourceUrl>
     <!--<docsUrl>At what url are the software docs located?</docsUrl>-->
-    <tags>sqlprocscaffold </tags>
+    <tags>sqlprocscaffold</tags>
     <summary>Generate strongly typed C# SQL scaffold</summary>
-    <description>For wrapping SQL Server stored procedures when Scaffold-DbContext doesn't seem to.</description>
+    <description>For wrapping SQL Server stored procedures when Scaffold-DbContext does not seem to.</description>
   </metadata>
   <files>
     <file src="tools\**" target="tools" />
