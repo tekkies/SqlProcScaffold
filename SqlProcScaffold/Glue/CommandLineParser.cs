@@ -32,7 +32,7 @@ dbo.sp_get%
 #if DEBUG
             DefaultValue = @"..\..\..\..\SqlProcScaffoldTest\Procs"),
 #else
-            DefaultValue = String.Empty()),
+            DefaultValue = ""),
 #endif
           Description(
      @"Filter procedures by name. Wildcard is %. e.g.
