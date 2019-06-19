@@ -1,4 +1,4 @@
-﻿From: https://github.com/tekkies/SqlProcScaffold/blob/master/LICENSE
+﻿From: https://raw.githubusercontent.com/tekkies/SqlProcScaffold/master/LICENSE
 
 LICENSE
 
