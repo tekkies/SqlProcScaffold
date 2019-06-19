@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Do not remove this test for UTF-8: if “Ω” doesn’t appear as greek uppercase omega letter enclosed in quotation marks, you should use an editor that supports UTF-8, not this one. -->
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>sqlprocscaffold</id>
+    <version>0.9.1</version>
+    <packageSourceUrl>https://github.com/tekkies/SqlProcScaffold</packageSourceUrl>
+	<owners>Andy Joiner</owners>
+    <title>SqlProcScaffold (Install)</title>
+    <authors>Andy Joiner</authors>
+    <projectUrl>https://github.com/tekkies/SqlProcScaffold</projectUrl>
+    <!--<iconUrl>http://cdn.rawgit.com/__REPLACE_YOUR_REPO__/master/icons/sqlprocscaffold.png</iconUrl>-->
+    <copyright>2019 Andy Joiner</copyright>
+    <licenseUrl>https://raw.githubusercontent.com/tekkies/SqlProcScaffold/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <projectSourceUrl>https://github.com/tekkies/SqlProcScaffold</projectSourceUrl>
+    <!--<docsUrl>At what url are the software docs located?</docsUrl>-->
+    <tags>sqlprocscaffold</tags>
+    <summary>Generate strongly typed C# SQL scaffold</summary>
+    <description>For wrapping SQL Server stored procedures when Scaffold-DbContext does not seem to.</description>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>
