@@ -20,7 +20,7 @@ namespace SprocWrapperCoreTest
         [TestInitialize]
         public void TestInitialize()
         {
-            SqlProcScaffoldTest.Procs.dbo.sp_sproc_wrapper_test.DefaultConnection = null;
+            SqlProcScaffoldTest.Procs.Proc.DefaultConnection = null;
         }
 
         [ClassCleanup]
@@ -28,7 +28,7 @@ namespace SprocWrapperCoreTest
         {
             _sqlConnection.Dispose();
             _sqlConnection = null;
-            SqlProcScaffoldTest.Procs.dbo.sp_sproc_wrapper_test.DefaultConnection = null;
+            SqlProcScaffoldTest.Procs.Proc.DefaultConnection = null;
         }
 
         [TestMethod]
