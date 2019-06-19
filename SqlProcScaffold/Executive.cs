@@ -14,6 +14,7 @@ namespace SqlProcScaffold
             _outputFolder = CommandLineParser.Request.OutputFolder;
             using (var sqlConnection = new SqlConnection(CommandLineParser.Request.ConnectionString))
             {
+                Logger.Log(Logger.Level.Info, "Connecting to database...");
                 sqlConnection.Open();
                 ProcComposer.WriteBaseClass();
                 var procs = GetProcs(sqlConnection, CommandLineParser.Request.Filter);
