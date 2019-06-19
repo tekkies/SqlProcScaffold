@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using Ookii.CommandLine;
 using SprocWrapper;
+using SqlProcScaffold.Utils;
 
 namespace SqlProcScaffold
 {
@@ -32,7 +33,7 @@ dbo.sp_get%
 #if DEBUG
             DefaultValue = @"..\..\..\..\SqlProcScaffoldTest\Procs"),
 #else
-            DefaultValue = String.Empty()),
+            DefaultValue = ""),
 #endif
           Description(
      @"Filter procedures by name. Wildcard is %. e.g.
@@ -113,13 +114,18 @@ dbo.sp_get%
             Logger.Log(Logger.Level.Info, String.Empty);
             Logger.Log(Logger.Level.Info, new string('-', 80));
             Logger.Log(Logger.Level.Info, String.Empty);
-            Logger.Log(Logger.Level.Info, Properties.Resources.LICENSE);
+            Logger.Log(Logger.Level.Info, GetLicenseText());
             Logger.Log(Logger.Level.Info, new string('-', 80));
             Logger.Log(Logger.Level.Info, @"
 Acknowledgments:
     Ookii.CommandLine by Sven Groot (Ookii.org)
 ");
             Logger.Log(Logger.Level.Info, new string('-', 80));
+        }
+
+        private static string GetLicenseText()
+        {
+            return ResourceHelper.GetResourceAsString("SqlProcScaffold.Resources.LICENSE");
         }
     }
 }

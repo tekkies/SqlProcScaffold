@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
 using SqlProcScaffold;
+using SqlProcScaffold.Utils;
 
 namespace SprocWrapper
 {
@@ -214,7 +215,7 @@ namespace SprocWrapper
             {
                 using (var streamWriter = new StreamWriter(file))
                 {
-                    var templateCode = SqlProcScaffold.Properties.Resources.Proc;
+                    var templateCode = ResourceHelper.GetResourceAsString("SqlProcScaffold.Procs.Proc.cs");
                     var renderedCode = templateCode.Replace("namespace SprocWrapper.Procs", $"namespace {CommandLineParser.Request.NameSpace}");
                     streamWriter.WriteLine(AutoGenComment);
                     streamWriter.Write(renderedCode);

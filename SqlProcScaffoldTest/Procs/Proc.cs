@@ -1,4 +1,5 @@
 //File auto-generated using https://github.com/tekkies/SqlProcScaffold
+using System;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
@@ -21,6 +22,10 @@ namespace SqlProcScaffoldTest.Procs
 
         protected void AddParameter(string name, object value)
         {
+            if (value == null)
+            {
+                value = DBNull.Value;
+            }
             _command.Parameters.Add(new SqlParameter($"@{name}", value));
         }
 

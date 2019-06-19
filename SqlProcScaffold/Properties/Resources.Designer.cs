@@ -81,7 +81,8 @@ namespace SqlProcScaffold.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to using System.Data;
+        ///   Looks up a localized string similar to using System;
+        ///using System.Data;
         ///using System.Data.Common;
         ///using System.Data.SqlClient;
         ///
@@ -91,6 +92,8 @@ namespace SqlProcScaffold.Properties {
         ///    {
         ///        protected SqlCommand _command;
         ///
+        ///        public static SqlConnection DefaultConnection { get; set; }
+        ///
         ///        protected void AddParameterIfNotNull(string nameWithoutAt, object value)
         ///        {
         ///            if (value != null)
@@ -99,24 +102,11 @@ namespace SqlProcScaffold.Properties {
         ///            }
         ///        }
         ///
-        ///        protected void AddParameter(string name, object value)
-        ///        {
-        ///            _command.Parameters. [rest of string was truncated]&quot;;.
+        ///        protected voi [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Proc {
             get {
                 return ResourceManager.GetString("Proc", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to # SqlProcScaffold
-        ///Generate strongly typed C# SQL scaffold 
-        ///.
-        /// </summary>
-        internal static string README {
-            get {
-                return ResourceManager.GetString("README", resourceCulture);
             }
         }
     }
