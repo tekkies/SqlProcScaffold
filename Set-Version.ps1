@@ -4,5 +4,5 @@
     -replace '<Version>\d+.\d+.\d+</Version>', "<Version>$newVersion</Version>") `
     | Out-File .\SqlProcScaffold\SqlProcScaffold.csproj
 ((Get-Content .\choco\SqlProcScaffold\sqlprocscaffold.nuspec) `
-    -replace '<Version>\d+.\d+.\d+</Version>', "<Version>$newVersion</Version>") `
+    -replace '<version>\d+.\d+.\d+</version>', "<version>$newVersion</version>") `
     | Out-File .\choco\SqlProcScaffold\sqlprocscaffold.nuspec
