@@ -1,4 +1,5 @@
 # SqlProcScaffold
+![maturity](https://img.shields.io/badge/maturity-beta-lightgrey.svg)
 Generate strongly typed C# SQL scaffold
 
 For wrapping stored procs when Scaffold-DbContext doesn't seem to.
