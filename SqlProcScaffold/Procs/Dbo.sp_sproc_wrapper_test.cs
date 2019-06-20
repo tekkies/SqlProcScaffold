@@ -8,7 +8,6 @@ namespace SprocWrapper.Procs
         {
             public sp_sproc_wrapper_test(SqlConnection sqlConnection,int intNoDefault, int? intNullDefault, int? intNumericDefault)
             {
-                CreateCommand(sqlConnection, nameof(Dbo.sp_sproc_wrapper_test));
                 AddParameter(nameof(intNoDefault), intNoDefault);
                 AddParameterIfNotNull(nameof(intNullDefault), intNullDefault);
                 AddParameterIfNotNull(nameof(intNumericDefault), intNumericDefault);
