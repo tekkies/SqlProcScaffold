@@ -3,6 +3,8 @@ Generate strongly typed C# SQL scaffold
 
 For wrapping stored procs when Scaffold-DbContext doesn't seem to.
 
+[Download](https://github.com/tekkies/SqlProcScaffold/releases/latest)
+
 ## Features
 
 ### Reduced boilerplate
