@@ -20,7 +20,7 @@ namespace SprocWrapperCoreTest
         [TestInitialize]
         public void TestInitialize()
         {
-            SqlProcScaffoldTest.Procs.dbo.sp_sproc_wrapper_test.DefaultConnection = null;
+            SqlProcScaffoldTest.Procs.Proc.DefaultConnection = null;
         }
 
         [ClassCleanup]
@@ -28,20 +28,21 @@ namespace SprocWrapperCoreTest
         {
             _sqlConnection.Dispose();
             _sqlConnection = null;
-            SqlProcScaffoldTest.Procs.dbo.sp_sproc_wrapper_test.DefaultConnection = null;
+            SqlProcScaffoldTest.Procs.Proc.DefaultConnection = null;
         }
 
         [TestMethod]
         public void TestWithExplicitConnection()
         {
             using (var dataReader = new SqlProcScaffoldTest.Procs.dbo.sp_sproc_wrapper_test(
-                _sqlConnection, 
                 1, 
                 "varcharNoDefault", 
                 2,
                 3,
                 "varcharNullDefault",
-                "varcharValueDefault").ExecuteDataReader())
+                "varcharValueDefault")
+                .SetConnection(_sqlConnection)
+                .ExecuteDataReader())
             {
                 dataReader.Read();
                 Assert.AreEqual(1, dataReader.GetInt32(0));

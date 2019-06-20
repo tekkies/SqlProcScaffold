@@ -80,7 +80,10 @@ namespace SprocWrapper
         {
             var nameWithSchema = $"{procDefinition.Identifier.Schema}.{procDefinition.Identifier.Name}";
             var script = new StringBuilder();
-            using (var dataReader = new SprocWrapper.Procs.sys.sp_helptext(_sqlConnection, nameWithSchema).ExecuteDataReader())
+            using (var dataReader = new SprocWrapper.Procs.sys.sp_helptext(
+                nameWithSchema)
+                .SetConnection(_sqlConnection)
+                .ExecuteDataReader())
             {
                 while (dataReader.Read())
                 {
@@ -92,7 +95,11 @@ namespace SprocWrapper
 
         private void ReadBasicParameterDefinition(ProcIdentifier procIdentifier, ProcDefinition procDefinition)
         {
-            using (var dataReader = new Procs.Dbo.sp_procedure_params_rowset(_sqlConnection, procIdentifier.Name, procedure_schema: procIdentifier.Schema).ExecuteDataReader())
+            using (var dataReader = new Procs.Dbo.sp_procedure_params_rowset(
+                procIdentifier.Name, 
+                procedure_schema: procIdentifier.Schema)
+                .SetConnection(_sqlConnection)
+                .ExecuteDataReader())
             {
                 while (dataReader.Read())
                 {

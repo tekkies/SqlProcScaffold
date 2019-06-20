@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
@@ -7,9 +8,11 @@ namespace SprocWrapper.Procs
 {
     public class Proc
     {
-        protected SqlCommand _command;
+        public Dictionary<string, object> Parameters { get; } = new Dictionary<string, object>();
 
-        public static SqlConnection DefaultConnection { get; set; }
+        public static DbConnection DefaultConnection { get; set; }
+
+        public DbConnection Connection { get; set; }
 
         protected void AddParameterIfNotNull(string nameWithoutAt, object value)
         {
@@ -21,29 +24,46 @@ namespace SprocWrapper.Procs
 
         protected void AddParameter(string name, object value)
         {
+
             if (value == null)
             {
                 value = DBNull.Value;
             }
-            _command.Parameters.Add(new SqlParameter($"@{name}", value));
+            Parameters.Add($"@{name}", value);
         }
 
         public DbDataReader ExecuteDataReader()
         {
-            return _command.ExecuteReader();
+            var dbCommand = CreateCommand();
+            BindParameters(dbCommand);
+            return dbCommand.ExecuteReader();
         }
 
         public void Execute()
         {
-            _command.ExecuteNonQuery();
+            var dbCommand = CreateCommand();
+            BindParameters(dbCommand);
+            dbCommand.ExecuteNonQuery();
         }
 
-        protected void CreateCommand(SqlConnection sqlConnection, string procedureName)
+        private void BindParameters(DbCommand dbCommand)
         {
-            _command = sqlConnection.CreateCommand();
-            _command.CommandType = CommandType.StoredProcedure;
-            _command.CommandText = procedureName;
+            foreach (var parameter in Parameters)
+            {
+                dbCommand.Parameters.Add(new SqlParameter(parameter.Key, parameter.Value));
+            }
         }
+
+        protected DbCommand CreateCommand()
+        {
+            var connection = Connection ?? DefaultConnection;
+            var command = connection.CreateCommand();
+            command.CommandType = CommandType.StoredProcedure;
+            var procedureName = this.GetType().Name;
+            command.CommandText = procedureName;
+            return command;
+        }
+
 
         public object ExecuteScalar()
         {
@@ -54,6 +74,12 @@ namespace SprocWrapper.Procs
                 System.Diagnostics.Debug.Assert(dataReader.Read() == false);
                 return scalar;
             }
+        }
+
+        public Proc SetConnection(DbConnection sqlConnection)
+        {
+            Connection = sqlConnection;
+            return this;
         }
     }
 }
