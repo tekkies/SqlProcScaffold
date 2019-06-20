@@ -103,36 +103,42 @@ namespace SprocWrapperCoreTest
         [TestMethod]
         public void ScreenshotSandpit()
         {
-            
-            //#region Before
-            //SqlProcScaffoldTest.Procs.Proc.DefaultConnection = _sqlConnection;
-            //var intNoDefault = 0;
-            //string varcharNoDefault = string.Empty;
-            //int? intNullDefault;
-            //#endregion
-            //var sqlCommand = _sqlConnection.CreateCommand();
-            //sqlCommand.CommandText = "dbo.sp_make_pizza";
-            //sqlCommand.CommandType = CommandType.StoredProcedure;
-            //sqlCommand.Parameters.Add(new SqlParameter("@name", "Hawaiian"));
-            //sqlCommand.Parameters.Add(new SqlParameter("@baseType", "stone baked"));
-            //var hawaiian = sqlCommand.ExecuteReader();
 
-            //#region After
-            //hawaiian.Dispose();
-            //#endregion
+            #region Before
+            SqlProcScaffoldTest.Procs.Proc.DefaultConnection = _sqlConnection;
+            var intNoDefault = 0;
+            string varcharNoDefault = string.Empty;
+            int? intNullDefault;
+            #endregion`
+            var sqlCommand = _sqlConnection.CreateCommand();
+            sqlCommand.CommandText = "dbo.sp_make_pizza";
+            sqlCommand.CommandType = CommandType.StoredProcedure;
+            sqlCommand.Parameters.Add(new SqlParameter("@name", "Hawaiian"));
+            sqlCommand.Parameters.Add(new SqlParameter("@baseType", "stone baked"));
+            sqlCommand.Parameters.Add(new SqlParameter("@anchovies", false));
+            var hawaiianBefore = sqlCommand.ExecuteReader();
+
+            #region After
+                hawaiianBefore.Dispose();
+            #endregion
+            var hawaiianAfter = new dbo.sp_make_pizza(
+                    "Hawaiian",
+                    "stone baked",
+                    anchovies: false)
+                    .ExecuteDataReader();
+
+    
             
-            ////new dbo.sp_make_pizza();
-            
-            //var pepperoniPlus = new dbo.sp_make_pizza(
-            //        "Pepperoni",
-            //        "deep pan",
-            //        "cheese filled",
-            //        anchovies: null)
-            //    .ExecuteDataReader();
-            
-            //var pepperoni = new dbo.sp_make_pizza(
-            //    "Pepperoni")
-            //    .ExecuteDataReader();
+            #region END
+            hawaiianAfter.Dispose();
+            #endregion
+
+        //new dbo.sp_make_pizza();
+
+
+        //var pepperoni = new dbo.sp_make_pizza(
+        //        "Pepperoni")
+        //        .ExecuteDataReader();
 
 
             #region End
