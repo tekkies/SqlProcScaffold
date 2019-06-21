@@ -1,4 +1,4 @@
-//File auto-generated using https://github.com/tekkies/SqlProcScaffold
+//File auto-generated using https://github.com/tekkies/SqlProcScaffold v0.9.3
 using System;
 using System.Collections.Generic;
 using System.Data;
