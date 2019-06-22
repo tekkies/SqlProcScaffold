@@ -1,5 +1,5 @@
 # SqlProcScaffold
-![maturity](https://img.shields.io/badge/maturity-beta-lightgrey.svg)
+![maturity](https://img.shields.io/badge/maturity-alpha-lightgrey.svg)
 
 Generate strongly typed C# SQL scaffold
 
