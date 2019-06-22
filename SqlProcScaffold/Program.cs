@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using Ookii.CommandLine;
 using SprocWrapper;
@@ -21,7 +22,8 @@ namespace SqlProcScaffold
 
         private static void LogVersion()
         {
-            Logger.Log(Logger.Level.Info, $"{VersionInfo.AssemblyName} v{VersionInfo.VersionString}");
+            AssemblyName assemblyName = Assembly.GetExecutingAssembly().GetName();
+            Logger.Log(Logger.Level.Info, $"{assemblyName.Name} v{assemblyName.Version}");
         }
     }
 }

@@ -133,21 +133,16 @@ namespace SprocWrapperCoreTest
             hawaiianAfter.Dispose();
             #endregion
 
+        //new dbo.sp_make_pizza();
 
 
-
-            //new dbo.sp_make_pizza();
-
-
-            //var pepperoni = new dbo.sp_make_pizza(
-            //        "Pepperoni")
-            //        .ExecuteDataReader();
+        //var pepperoni = new dbo.sp_make_pizza(
+        //        "Pepperoni")
+        //        .ExecuteDataReader();
 
 
             #region End
-
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
             #endregion
         }
 
