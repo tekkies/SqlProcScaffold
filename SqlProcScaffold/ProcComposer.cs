@@ -17,6 +17,7 @@ namespace SprocWrapper
         private string _indentationPadding = String.Empty;
         private ProcDefinition _procDefinition;
         private string _fileName;
+        public static string AutoGenComment = $"//File auto-generated using https://github.com/tekkies/SqlProcScaffold v{VersionInfo.VersionString}";
 
         public ProcComposer(SqlConnection sqlConnection, ProcIdentifier procIdentifier, string outputFolder)
         {
@@ -193,7 +194,6 @@ namespace SprocWrapper
             return new StreamWriter(_fileName);
         }
 
-        public const string AutoGenComment = "//File auto-generated using https://github.com/tekkies/SqlProcScaffold";
 
         public static void WriteBaseClass()
         {
