@@ -32,6 +32,9 @@ namespace SprocWrapper
                 case "int":
                     cSharpType = "int?";
                     break;
+                case "float":
+                    cSharpType = "double?";
+                    break;
                 case "datetime":
                     cSharpType = "DateTime?";
                     break;
@@ -42,6 +45,9 @@ namespace SprocWrapper
                 case "text":
                 case "ntext":
                     cSharpType = "string";
+                    break;
+                case "table":
+                    cSharpType = "SqlParameter";
                     break;
                 default:
                     throw new NotImplementedException($"Unable to map SQL data type \"{sqlType}\" to C# data type");
@@ -59,19 +65,15 @@ namespace SprocWrapper
                 case "int":
                     cSharpType = "int";
                     break;
+                case "float":
+                    cSharpType = "double?";
+                    break;
                 case "datetime":
                     cSharpType = "DateTime";
                     break;
-                case "char":
-                case "nchar":
-                case "varchar":
-                case "nvarchar":
-                case "text":
-                case "ntext":
-                    cSharpType = "string";
-                    break;
                 default:
-                    throw new NotImplementedException($"Unable to map SQL data type \"{sqlType}\" to C# data type");
+                    cSharpType = GetNullableCSharpType(sqlType);
+                    break;
             }
             return cSharpType;
         }
