@@ -46,11 +46,9 @@ namespace SprocWrapper
                 case "ntext":
                     cSharpType = "string";
                     break;
-                case "table":
+                default:
                     cSharpType = "SqlParameter";
                     break;
-                default:
-                    throw new NotImplementedException($"Unable to map SQL data type \"{sqlType}\" to C# data type");
             }
             return cSharpType;
         }
